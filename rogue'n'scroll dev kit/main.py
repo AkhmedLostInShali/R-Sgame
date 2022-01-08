@@ -13,6 +13,8 @@ all_sprites = pygame.sprite.Group()
 floor_group = pygame.sprite.Group()
 # platform_group = pygame.sprite.Group()
 player_group = pygame.sprite.Group()
+rail_group = pygame.sprite.Group()
+enemy_group = pygame.sprite.Group()
 projectile_group = pygame.sprite.Group()
 
 
@@ -69,6 +71,12 @@ def generate_level(level):
                 Tile((x, y), build(level, x, y))
             elif level[y][x] == '2':
                 Platform((x, y))
+    for y in range(len(level)):
+        for x in range(len(level[y])):
+            if level[y][x] == '3':
+                Rail((x, y))
+            if level[y][x] == 'm':
+                Mortar((x, y))
     # floor_group.update(level)
     new_player = Player(*player_xy)
     return new_player, x, y
@@ -90,6 +98,15 @@ def load_image(name, colorkey=None):
     return image
 
 
+def cut_sheet(sheet, columns):
+    rect = pygame.Rect(0, 0, sheet.get_width() // columns, sheet.get_height())
+    frames = []
+    for i in range(columns):
+        frame_location = (rect.w * i, 0)
+        frames.append(sheet.subsurface(pygame.Rect(frame_location, rect.size)))
+    return frames
+
+
 def load_level(filename):
     if not os.path.isfile(os.path.join('data', filename)):
         print(f"Файл с уровнем '{filename}' не найден")
@@ -100,8 +117,6 @@ def load_level(filename):
     return list(map(lambda x: x.ljust(max_width, '.'), level_map))
 
 
-player_image = load_image('torso')
-platform_image = load_image('platforms')
 tile_width = tile_height = 40
 
 
@@ -119,15 +134,35 @@ class Tile(pygame.sprite.Sprite):
 
 
 class Platform(Tile):
+    platform_image = load_image('platforms')
+
     def __init__(self, pos):
-        super().__init__(pos, platform_image)
+        super().__init__(pos, self.platform_image)
         self.rect.height = 7
 
 
+class Rail(pygame.sprite.Sprite):
+    rail_frames = cut_sheet(load_image('rail'), 8)
+
+    def __init__(self, pos):
+        super().__init__(all_sprites, rail_group)
+        self.cur_frame = 0
+        self.image = self.rail_frames[self.cur_frame]
+        self.rect = self.image.get_rect()
+        self.rect.x = pos[0] * tile_width
+        self.rect.y = pos[1] * tile_height - 5
+
+    def update(self):
+        self.cur_frame = (self.cur_frame + 6 / FPS) % 7
+        self.image = self.rail_frames[round(self.cur_frame)]
+
+
 class Player(pygame.sprite.Sprite):
+    player_image = load_image('torso')
+
     def __init__(self, pos_x, pos_y):
         super().__init__(player_group, all_sprites)
-        self.image = player_image
+        self.image = self.player_image
         self.rect = self.image.get_rect().move(tile_width * pos_x - 24, tile_height * pos_y - 24)
         self.change_x = 0
         self.change_y = 0
@@ -237,8 +272,7 @@ class Projectile(pygame.sprite.Sprite):
         super().__init__(projectile_group, all_sprites)
         self.trajectory = trajectory[0]
         self.change_x, self.change_y = vector
-        self.frames = []
-        self.cut_sheet(load_image(name), 8)
+        self.frames = cut_sheet(load_image(name), 8)
         self.cur_frame = 0
         self.image = self.frames[self.cur_frame]
         self.rect = self.image.get_rect()
@@ -249,12 +283,6 @@ class Projectile(pygame.sprite.Sprite):
         # self.image = rot_image.subsurface(rot_rect).copy()
         self.float_x, self.float_y = self.rect.x, self.rect.y
         self.speed = 400 / FPS
-
-    def cut_sheet(self, sheet, columns):
-        self.rect = pygame.Rect(0, 0, sheet.get_width() // columns, sheet.get_height())
-        for i in range(columns):
-            frame_location = (self.rect.w * i, 0)
-            self.frames.append(sheet.subsurface(pygame.Rect(frame_location, self.rect.size)))
 
     def update(self):
         if self.trajectory == 'parabolic':
@@ -274,6 +302,59 @@ class Projectile(pygame.sprite.Sprite):
         self.kill()
 
 
+class Enemy(pygame.sprite.Sprite):
+    def __init__(self, name, frames, pos):
+        super().__init__(enemy_group, all_sprites)
+        self.frames = cut_sheet(load_image(name), frames)
+        self.cur_frame = 0
+        self.image = self.frames[self.cur_frame]
+        self.rect = self.image.get_rect()
+        self.rect.x = pos[0] * tile_width
+        self.rect.bottom = (pos[1] + 1) * tile_width
+        self.float_x, self.float_y = self.rect.x, self.rect.y
+
+
+class Mortar(Enemy):
+    def __init__(self, pos, orientation='bottom'):
+        super().__init__("mortar_" + orientation, 5, pos)
+        Rail(pos)
+        self.cur_frame = 2
+        # self.rect.x += 20
+        self.charge_effect = cut_sheet(load_image('mortar_charge'), 8)
+        self.charge = 0
+        self.image = self.frames[self.cur_frame]
+        self.image.blit(self.charge_effect[self.charge], (25, 32))
+        self.rect = self.image.get_rect()
+        self.rect.x = pos[0] * tile_width
+        self.rect.bottom = (pos[1] + 1) * tile_width - 2
+        self.speed = 12 / FPS
+
+    def update(self):
+        self.rect.x -= 64
+        left = pygame.sprite.spritecollideany(self, rail_group)
+        self.rect.x += 64
+        self.rect.x += 64
+        right = pygame.sprite.spritecollideany(self, rail_group)
+        self.rect.x -= 64
+        if player.rect.x < self.rect.x and left:
+            self.float_x -= self.speed
+        elif player.rect.x > self.rect.x and right:
+            self.float_x += self.speed
+        self.rect.x = round(self.float_x)
+        self.charge += 1 / FPS
+        point = pygame.math.Vector2(player.rect.centerx, player.rect.centery)
+        mouse_pos = pygame.math.Vector2((self.rect.centerx, self.rect.bottom + 11))
+        angle = (mouse_pos - point).as_polar()[1] - 90
+        self.cur_frame = 2 + max((-2, min([round(angle // 22.5), 2])))
+        self.image = self.frames[self.cur_frame]
+        self.image.blit(self.charge_effect[round(self.charge % 7)], (25, 33))
+        if self.cur_frame == 7:
+            self.attack()
+
+    def attack(self):
+        pass
+
+
 class Camera:
     # зададим начальный сдвиг камеры
     def __init__(self, full, view):
@@ -287,7 +368,7 @@ class Camera:
     def apply(self, obj):
         obj.rect.x += self.dx
         obj.rect.y += self.dy
-        if isinstance(obj, Player):
+        if isinstance(obj, Player) or isinstance(obj, Projectile) or isinstance(obj, Enemy):
             obj.float_x += self.dx
             obj.float_y += self.dy
 
@@ -344,6 +425,7 @@ def start_screen():
 
 
 def main():
+    global player
     running = True
     player, level_x, level_y = generate_level(load_level('level1.txt'))
     FULL_SIZE = ((level_x + 1) * tile_width, (level_y + 1) * tile_height)
@@ -380,6 +462,8 @@ def main():
         player_group.update(-angle)
         camera.update(player)
         projectile_group.update()
+        rail_group.update()
+        enemy_group.update()
         for sprite in all_sprites:
             camera.apply(sprite)
         all_sprites.draw(screen)
