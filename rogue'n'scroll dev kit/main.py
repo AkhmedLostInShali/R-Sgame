@@ -6,9 +6,10 @@ from math import hypot
 FPS = 60
 pygame.init()
 clock = pygame.time.Clock()
-FULL_SIZE = WIDTH, HEIGHT = 1000, 600
+FULL_SIZE = WIDTH, HEIGHT = 1920, 1080
 screen = pygame.display.set_mode(FULL_SIZE)
 player = None
+STATS = {'HP': 100, 'MP': 50}
 all_sprites = pygame.sprite.Group()
 floor_group = pygame.sprite.Group()
 # platform_group = pygame.sprite.Group()
@@ -157,6 +158,19 @@ class Rail(pygame.sprite.Sprite):
         self.image = self.rail_frames[round(self.cur_frame)]
 
 
+class StatBar(pygame.sprite.Sprite):
+    bar_image = load_image('stat_bar')
+    back_image = load_image('stat_bar_back')
+
+    def __init__(self):
+        super().__init__(all_sprites)
+        self.image = self.back_image
+        pygame.draw.rect(self.image, (155, 0, 15), (2, 3, 200, 28))
+        pygame.draw.rect(self.image, (15, 0, 155), (2, 38, 160, 21))
+        self.image.blit(self.bar_image, (0, 0))
+        self.rect = self.image.get_rect()
+
+
 class Player(pygame.sprite.Sprite):
     player_image = load_image('torso')
 
@@ -176,13 +190,14 @@ class Player(pygame.sprite.Sprite):
         self.calc_grav()
         self.float_x += self.change_x
         self.rect.x = round(self.float_x)
-        block_hit = pygame.sprite.spritecollideany(self, floor_group)
-        if block_hit and not isinstance(block_hit, Platform):
+        block_hit = pygame.sprite.spritecollide(self, floor_group, False)
+        floor_hit = list(filter(lambda x: not isinstance(x, Platform), block_hit)) if block_hit else None
+        if floor_hit:
             if self.change_x > 0:
-                self.rect.right = block_hit.rect.left
+                self.rect.right = floor_hit[0].rect.left
                 self.float_x = self.rect.x
             elif self.change_x < 0:
-                self.rect.left = block_hit.rect.right
+                self.rect.left = floor_hit[0].rect.right
                 self.float_x = self.rect.x
         self.float_y += self.change_y
         self.rect.y = round(self.float_y)
@@ -263,7 +278,7 @@ class CosmoWeapon(pygame.sprite.Sprite):
 
     def attack(self, vector):
         if not self.cooldown[0]:
-            Projectile('drop_projectile', self.rect.center, ('straight', self.angle), vector)
+            SunDrop(self.rect.center, ('straight', self.angle), vector)
             self.cooldown[0] = self.cooldown[1]
 
 
@@ -272,7 +287,7 @@ class Projectile(pygame.sprite.Sprite):
         super().__init__(projectile_group, all_sprites)
         self.trajectory = trajectory[0]
         self.change_x, self.change_y = vector
-        self.frames = cut_sheet(load_image(name), 8)
+        self.frames = cut_sheet(load_image(name + '_projectile'), 8)
         self.cur_frame = 0
         self.image = self.frames[self.cur_frame]
         self.rect = self.image.get_rect()
@@ -291,11 +306,48 @@ class Projectile(pygame.sprite.Sprite):
         self.float_y += self.change_y * self.speed
         self.rect.x = round(self.float_x)
         self.rect.y = round(self.float_y)
-        self.cur_frame = (self.cur_frame + 4 / FPS)
+
+
+# class Explosion(Projectile):
+#     def __init__(self, pos):
+#         super().__init__('explosion', pos, (0, 0), (0, 0))
+
+
+class SunDrop(Projectile):
+    def __init__(self, pos, angle, vector):
+        super().__init__('drop', pos, ('straight', angle), vector)
+
+    def update(self):
+        super().update()
+        self.cur_frame = (self.cur_frame + 8 / FPS)
         self.image = self.frames[round(self.cur_frame) % len(self.frames)]
         collisions = pygame.sprite.spritecollideany(self,
                                                     floor_group, collided=pygame.sprite.collide_circle_ratio(.625))
         if collisions and not isinstance(collisions, Platform):
+            self.detonate()
+
+    def detonate(self):
+        self.kill()
+
+
+class Plasma(Projectile):
+    def __init__(self, pos, angle, vector):
+        super().__init__('plasma', pos, ('straight', angle), vector)
+        self.speed = 25 / FPS
+        self.timer = 1.5
+
+    def update(self):
+        super().update()
+        self.cur_frame = (self.cur_frame + 8 / FPS)
+        self.image = self.frames[round(self.cur_frame) % len(self.frames)]
+        if self.timer == 2.5:
+            collisions = pygame.sprite.spritecollideany(self, player_group,
+                                                        collided=pygame.sprite.collide_circle_ratio(1.5))
+            if collisions:
+                self.timer -= 1 / FPS
+        elif 0 < self.timer < 2.5:
+            self.timer -= 1 / FPS
+        else:
             self.detonate()
 
     def detonate(self):
@@ -341,18 +393,20 @@ class Mortar(Enemy):
         elif player.rect.x > self.rect.x and right:
             self.float_x += self.speed
         self.rect.x = round(self.float_x)
-        self.charge += 1 / FPS
+        self.charge += 0.6 / FPS
         point = pygame.math.Vector2(player.rect.centerx, player.rect.centery)
-        mouse_pos = pygame.math.Vector2((self.rect.centerx, self.rect.bottom + 11))
-        angle = (mouse_pos - point).as_polar()[1] - 90
+        mort_pos = pygame.math.Vector2((self.rect.centerx, self.rect.bottom - 11))
+        angle = (mort_pos - point).as_polar()[1] - 90
         self.cur_frame = 2 + max((-2, min([round(angle // 22.5), 2])))
         self.image = self.frames[self.cur_frame]
         self.image.blit(self.charge_effect[round(self.charge % 7)], (25, 33))
-        if self.cur_frame == 7:
+        if self.charge > 6:
             self.attack()
+            self.charge = 0
 
     def attack(self):
-        pass
+        vectors = [(-0.5, -0.5), (-0.25, -0.75), (0, -1), (0.25, -0.75), (0.5, -0.5)]
+        Plasma((self.rect.centerx, self.rect.bottom - 11), 22.5 * (self.cur_frame - 2), vectors[self.cur_frame])
 
 
 class Camera:
@@ -366,6 +420,8 @@ class Camera:
 
     # сдвинуть объект obj на смещение камеры
     def apply(self, obj):
+        if isinstance(obj, StatBar):
+            return
         obj.rect.x += self.dx
         obj.rect.y += self.dy
         if isinstance(obj, Player) or isinstance(obj, Projectile) or isinstance(obj, Enemy):
@@ -429,9 +485,11 @@ def main():
     running = True
     player, level_x, level_y = generate_level(load_level('level1.txt'))
     FULL_SIZE = ((level_x + 1) * tile_width, (level_y + 1) * tile_height)
-    view_size = (round(level_x / 1.2 + 1) * tile_width, round(level_y / 1.2 + 1) * tile_height)
-    screen = pygame.display.set_mode(view_size)
+    view_size = (min((1920, FULL_SIZE[0])), min((1080, FULL_SIZE[1])))
+    screen = pygame.display.set_mode(FULL_SIZE)
     camera = Camera(FULL_SIZE, view_size)
+    stat_bar = StatBar()
+    # player = Player(FULL_SIZE[0] // 2, FULL_SIZE[1] // 2)
     while running:
         screen.fill((0, 0, 0))
         for event in pygame.event.get():
