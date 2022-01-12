@@ -1,6 +1,7 @@
 import os
 import sys
 import pygame
+from random import choice
 from math import hypot
 
 FPS = 60
@@ -11,7 +12,7 @@ pre_screen = pygame.display.set_mode(FULL_SIZE)
 enemy_health = None
 STATS = {'HP': 100, 'MP': 50, 'damage': 30}
 ENEMY_STATS = {'HP': 100, 'damage': 30}
-all_sprites = pygame.sprite.Group()
+all_sprites = pygame.sprite.LayeredUpdates()
 floor_group = pygame.sprite.Group()
 # platform_group = pygame.sprite.Group()
 player_group = pygame.sprite.Group()
@@ -111,10 +112,10 @@ def cut_sheet(sheet, columns):
 
 
 def load_level(filename):
-    if not os.path.isfile(os.path.join('data', filename)):
+    if not os.path.isfile(os.path.join('levels', filename)):
         print(f"Файл с уровнем '{filename}' не найден")
         sys.exit()
-    with open("data/" + filename, 'r') as mapFile:
+    with open("levels/" + filename, 'r') as mapFile:
         level_map = [line.strip() for line in mapFile]
     max_width = max(map(len, level_map))
     return list(map(lambda x: x.ljust(max_width, '.'), level_map))
@@ -126,6 +127,7 @@ tile_width = tile_height = 40
 class Tile(pygame.sprite.Sprite):
     def __init__(self, pos, im_build):
         super().__init__(floor_group, all_sprites)
+        all_sprites.change_layer(self, 1)
         self.image = im_build
         self.rect = self.image.get_rect()
         self.rect.x = pos[0] * tile_width
@@ -149,6 +151,7 @@ class Rail(pygame.sprite.Sprite):
 
     def __init__(self, pos):
         super().__init__(all_sprites, rail_group)
+        all_sprites.change_layer(self, 3)
         self.cur_frame = 0
         self.image = self.rail_frames[self.cur_frame]
         self.rect = self.image.get_rect()
@@ -166,6 +169,7 @@ class StatBar(pygame.sprite.Sprite):
 
     def __init__(self):
         super().__init__(all_sprites)
+        all_sprites.change_layer(self, 6)
         self.image = self.back_image.copy()
         self.stats = STATS.copy()
         pygame.draw.rect(self.image, (155, 0, 15), (2, 3, 200, 28))
@@ -191,6 +195,7 @@ class Player(pygame.sprite.Sprite):
 
     def __init__(self, pos_x, pos_y):
         super().__init__(player_group, all_sprites)
+        all_sprites.change_layer(self, 4)
         self.image = self.player_image
         self.rect = self.image.get_rect().move(tile_width * pos_x - 24, tile_height * pos_y - 24)
         self.change_x = 0
@@ -263,7 +268,7 @@ class Player(pygame.sprite.Sprite):
         on_platform = ground_hit and isinstance(ground_hit, Platform) and self.rect.bottom == ground_hit.rect.top + 1
         self.rect.y -= 1
         if on_platform:
-            self.fall = FPS * 1.5
+            self.fall = FPS * 0.3
 
     def go_left(self):
         self.change_x = -self.speed
@@ -279,6 +284,7 @@ class CosmoWeapon(pygame.sprite.Sprite):
     def __init__(self):
         # super().__init__(player_group, all_sprites)
         super().__init__(weapon_group, all_sprites)
+        all_sprites.change_layer(self, 4)
         self.color = (215, 215, 185)
         self.image = pygame.surface.Surface((48, 48), pygame.SRCALPHA, 32)
         pygame.draw.circle(self.image, self.color, (24, 24), 10, 0)
@@ -305,6 +311,7 @@ class CosmoWeapon(pygame.sprite.Sprite):
 class Projectile(pygame.sprite.Sprite):
     def __init__(self, name, pos, trajectory, vector, friendly=False):
         super().__init__(projectile_group, all_sprites)
+        all_sprites.change_layer(self, 2)
         self.trajectory = trajectory[0]
         self.friendly = friendly
         if friendly:
@@ -399,6 +406,7 @@ class Plasma(Projectile):
 class EnemyHealthBar(pygame.sprite.Sprite):
     def __init__(self, cur_hp, max_hp):
         super().__init__(all_sprites)
+        all_sprites.change_layer(self, 6)
         length = cur_hp * min(max_hp * 2, 800) / max_hp
         self.image = pygame.surface.Surface((min(max_hp * 2, 800), 15), pygame.SRCALPHA, 32)
         self.rect = self.image.get_rect()
@@ -410,6 +418,7 @@ class EnemyHealthBar(pygame.sprite.Sprite):
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, name, frames, pos):
         super().__init__(enemy_group, all_sprites)
+        all_sprites.change_layer(self, 3)
         self.hp = self.max_hp = ENEMY_STATS['HP']
         self.frames = cut_sheet(load_image(name), frames)
         self.cur_frame = 0
@@ -431,6 +440,8 @@ class Enemy(pygame.sprite.Sprite):
             enemy_health = EnemyHealthBar(self.hp, self.max_hp)
 
     def death(self):
+        global enemy_health
+        enemy_health = None
         self.kill()
 
 
@@ -555,10 +566,13 @@ def start_screen():
         clock.tick(FPS)
 
 
-def main():
+def level():
     global PLAYER
     running = True
-    level_x, level_y = generate_level(load_level('level1.txt'))
+    levels = os.listdir('levels/')
+    print(levels)
+    cur_level = choice(levels)
+    level_x, level_y = generate_level(load_level(cur_level))
     level_size = ((level_x + 1) * tile_width, (level_y + 1) * tile_height)
     view_size = (min((1920, level_size[0])), min((1080, level_size[1])))
     screen = pygame.display.set_mode(level_size)
@@ -607,4 +621,4 @@ def main():
 
 if __name__ == '__main__':
     # start_screen()
-    main()
+    level()

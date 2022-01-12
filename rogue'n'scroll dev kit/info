@@ -1,0 +1,8 @@
+layers:
+0-background
+1-floor and platforms
+2-lower projectiles
+3-enemies
+4-player
+5-higher projectiles
+6-interface
