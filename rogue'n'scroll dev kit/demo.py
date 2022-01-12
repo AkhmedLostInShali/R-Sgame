@@ -7,7 +7,7 @@ pygame.init()
 clock = pygame.time.Clock()
 size = WIDTH, HEIGHT = 1000, 600
 screen = pygame.display.set_mode(size)
-player = None
+PLAYER = None
 all_sprites = pygame.sprite.Group()
 tiles_group = pygame.sprite.Group()
 player_group = pygame.sprite.Group()
