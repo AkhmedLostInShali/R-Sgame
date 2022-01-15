@@ -1,0 +1,15 @@
+Index: rogue'n'scroll dev kit/test.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>print(-11 % -10)
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/rogue'n'scroll dev kit/test.py b/rogue'n'scroll dev kit/test.py
+--- a/rogue'n'scroll dev kit/test.py	
++++ b/rogue'n'scroll dev kit/test.py	
+@@ -1,1 +1,1 @@
+-print(-11 % -10)
+\ No newline at end of file
++print(17 % 18)
+\ No newline at end of file

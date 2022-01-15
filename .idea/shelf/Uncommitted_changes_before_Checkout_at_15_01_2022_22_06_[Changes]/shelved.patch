@@ -1,0 +1,1048 @@
+Index: rogue'n'scroll dev kit/main.py
+===================================================================
+diff --git a/rogue'n'scroll dev kit/main.py b/rogue'n'scroll dev kit/game_cycles.py
+rename from rogue'n'scroll dev kit/main.py
+rename to rogue'n'scroll dev kit/game_cycles.py
+--- a/rogue'n'scroll dev kit/main.py	
++++ b/rogue'n'scroll dev kit/game_cycles.py	
+@@ -3,67 +3,30 @@
+ import pygame
+ from random import choice
+ from math import hypot
++from data_funcs import load_image, load_level, build, cut_sheet
++from buildings import Tile, Platform, Portal, Rail
++from settings_n_variables import FPS, FULL_SIZE, WIDTH, HEIGHT, tile_width, tile_height, STATS, ENEMY_STATS
++from projectiles_n_movings import Projectile, Plasma, SunDrop
++from enemies import Enemy, Mortar
++from initialisation import enemy_group, player_group, projectile_group, all_sprites, portal_group, rail_group
++from initialisation import floor_group, weapon_group
++from interface import StatBar, EnemyHealthBar
+ 
+-FPS = 60
+ pygame.init()
+ clock = pygame.time.Clock()
+-FULL_SIZE = WIDTH, HEIGHT = 1920, 1080
+ pre_screen = pygame.display.set_mode(FULL_SIZE)
+ enemy_health = None
+-STATS = {'HP': 100, 'MP': 50, 'damage': 30}
+-ENEMY_STATS = {'HP': 100, 'damage': 30}
+-all_sprites = pygame.sprite.LayeredUpdates()
+-floor_group = pygame.sprite.Group()
+-# platform_group = pygame.sprite.Group()
+-player_group = pygame.sprite.Group()
+-weapon_group = pygame.sprite.Group()
+-rail_group = pygame.sprite.Group()
+-enemy_group = pygame.sprite.Group()
+-projectile_group = pygame.sprite.Group()
+-
+-
+-def build(matrix, x, y):
+-    im = pygame.surface.Surface((40, 40))
+-    im.fill((100, 100, 120))
+-    up = 0 < y and matrix[y - 1][x] == '1'
+-    down = y + 1 < len(matrix) and matrix[y + 1][x] == '1'
+-    right = x + 1 < len(matrix[0]) and matrix[y][x + 1] == '1'
+-    left = x > 0 and matrix[y][x - 1] == '1'
+-    if not up:
+-        pygame.Surface.blit(im, load_image('top'), (0, 0))
+-        if not right:
+-            pygame.Surface.blit(im, load_image('top_right'), (0, 0))
+-            if down:
+-                pygame.Surface.blit(im, load_image('low_right'), (0, 0))
+-        if not left:
+-            pygame.Surface.blit(im, load_image('top_left'), (0, 0))
+-            if down:
+-                pygame.Surface.blit(im, load_image('low_left'), (0, 0))
+-    if not down:
+-        pygame.Surface.blit(im, load_image('bottom'), (0, 0))
+-        if not right:
+-            pygame.Surface.blit(im, load_image('bottom_right'), (0, 0))
+-            if up:
+-                pygame.Surface.blit(im, load_image('high_right'), (0, 0))
+-        if not left:
+-            pygame.Surface.blit(im, load_image('bottom_left'), (0, 0))
+-            if up:
+-                pygame.Surface.blit(im, load_image('high_left'), (0, 0))
+-    if not right and up and down:
+-        pygame.Surface.blit(im, load_image('high_right'), (0, 0))
+-        pygame.Surface.blit(im, load_image('low_right'), (0, 0))
+-    if not left and up and down:
+-        pygame.Surface.blit(im, load_image('high_left'), (0, 0))
+-        pygame.Surface.blit(im, load_image('low_left'), (0, 0))
+-    if left and down and not matrix[y + 1][x - 1] == '1':
+-        pygame.Surface.blit(im, load_image('inner_top_right'), (0, 0))
+-    if right and down and not matrix[y + 1][x + 1] == '1':
+-        pygame.Surface.blit(im, load_image('inner_top_left'), (0, 0))
+-    if left and up and not matrix[y - 1][x - 1] == '1':
+-        pygame.Surface.blit(im, load_image('inner_bottom_right'), (0, 0))
+-    if right and up and not matrix[y - 1][x + 1] == '1':
+-        pygame.Surface.blit(im, load_image('inner_bottom_left'), (0, 0))
+-    return im
++# STATS = {'HP': 100, 'MP': 50, 'damage': 30}
++# ENEMY_STATS = {'HP': 100, 'damage': 30}
++# all_sprites = pygame.sprite.LayeredUpdates()
++# floor_group = pygame.sprite.Group()
++# portal_group = pygame.sprite.Group()
++# # platform_group = pygame.sprite.Group()
++# player_group = pygame.sprite.Group()
++# weapon_group = pygame.sprite.Group()
++# rail_group = pygame.sprite.Group()
++# enemy_group = pygame.sprite.Group()
++# projectile_group = pygame.sprite.Group()
+ 
+ 
+ def generate_level(level):
+@@ -72,130 +35,27 @@
+     for y in range(len(level)):
+         for x in range(len(level[y])):
+             if level[y][x] == '1':
+-                Tile((x, y), build(level, x, y))
++                Tile((x, y), build(level, x, y), floor_group, all_sprites)
+             elif level[y][x] == '2':
+-                Platform((x, y))
+-    for y in range(len(level)):
+-        for x in range(len(level[y])):
+-            if level[y][x] == '3':
+-                Rail((x, y))
+-            if level[y][x] == 'm':
+-                Mortar((x, y))
++                Platform((x, y), floor_group, all_sprites)
++            elif level[y][x] == '3':
++                Rail((x, y), rail_group, all_sprites)
++            elif level[y][x] == '4':
++                Portal((x, y), portal_group, all_sprites)
++            elif level[y][x] == 'm':
++                Rail((x, y), rail_group, all_sprites)
++                Mortar((x, y), rail_group, PLAYER, [player_group, floor_group], enemy_group, all_sprites)
+     # floor_group.update(level)
+     # new_player = Player(*player_xy)
+     return x, y
+ 
+ 
+-def load_image(name, colorkey=None):
+-    fullname = os.path.join('data', name + '.png')
+-    if not os.path.isfile(fullname):
+-        print(f"Файл с изображением '{fullname}' не найден")
+-        sys.exit()
+-    image = pygame.image.load(fullname)
+-    if colorkey is not None:
+-        image = image.convert()
+-        if colorkey == -1:
+-            colorkey = image.get_at((0, 0))
+-        image.set_colorkey(colorkey)
+-    else:
+-        image = image.convert_alpha()
+-    return image
+-
+-
+-def cut_sheet(sheet, columns):
+-    rect = pygame.Rect(0, 0, sheet.get_width() // columns, sheet.get_height())
+-    frames = []
+-    for i in range(columns):
+-        frame_location = (rect.w * i, 0)
+-        frames.append(sheet.subsurface(pygame.Rect(frame_location, rect.size)))
+-    return frames
+-
+-
+-def load_level(filename):
+-    if not os.path.isfile(os.path.join('levels', filename)):
+-        print(f"Файл с уровнем '{filename}' не найден")
+-        sys.exit()
+-    with open("levels/" + filename, 'r') as mapFile:
+-        level_map = [line.strip() for line in mapFile]
+-    max_width = max(map(len, level_map))
+-    return list(map(lambda x: x.ljust(max_width, '.'), level_map))
+-
+-
+-tile_width = tile_height = 40
+-
+-
+-class Tile(pygame.sprite.Sprite):
+-    def __init__(self, pos, im_build):
+-        super().__init__(floor_group, all_sprites)
+-        all_sprites.change_layer(self, 1)
+-        self.image = im_build
+-        self.rect = self.image.get_rect()
+-        self.rect.x = pos[0] * tile_width
+-        self.rect.y = pos[1] * tile_height
+-
+-    # def update(self, level):
+-    #     x, y = self.rect.x // tile_width, self.rect.y // tile_height
+-    #     self.image = build(level, x, y)
+-
+-
+-class Platform(Tile):
+-    platform_image = load_image('platforms')
+-
+-    def __init__(self, pos):
+-        super().__init__(pos, self.platform_image)
+-        self.rect.height = 7
+-
+-
+-class Rail(pygame.sprite.Sprite):
+-    rail_frames = cut_sheet(load_image('rail'), 8)
+-
+-    def __init__(self, pos):
+-        super().__init__(all_sprites, rail_group)
+-        all_sprites.change_layer(self, 3)
+-        self.cur_frame = 0
+-        self.image = self.rail_frames[self.cur_frame]
+-        self.rect = self.image.get_rect()
+-        self.rect.x = pos[0] * tile_width
+-        self.rect.y = pos[1] * tile_height - 5
+-
+-    def update(self):
+-        self.cur_frame = (self.cur_frame + 6 / FPS) % 7
+-        self.image = self.rail_frames[round(self.cur_frame)]
+-
+-
+-class StatBar(pygame.sprite.Sprite):
+-    bar_image = load_image('stat_bar')
+-    back_image = load_image('stat_bar_back')
+-
+-    def __init__(self):
+-        super().__init__(all_sprites)
+-        all_sprites.change_layer(self, 6)
+-        self.image = self.back_image.copy()
+-        self.stats = STATS.copy()
+-        pygame.draw.rect(self.image, (155, 0, 15), (2, 3, 200, 28))
+-        pygame.draw.rect(self.image, (15, 0, 155), (2, 38, 160, 21))
+-        self.image.blit(self.bar_image, (0, 0))
+-        self.rect = self.image.get_rect()
+-
+-    def update(self):
+-        self.image = self.back_image.copy()
+-        pygame.draw.rect(self.image, (155, 0, 15), (2, 3, self.stats['HP'] * 200 / STATS['HP'], 28))
+-        pygame.draw.rect(self.image, (15, 0, 155), (2, 38, self.stats['MP'] * 160 / STATS['MP'], 21))
+-        self.image.blit(self.bar_image, (0, 0))
+-
+-    def change_health(self, value):
+-        self.stats['HP'] += value
+-        if self.stats['HP'] <= 0:
+-            death_screen()
+-        self.update()
+-
+-
+ class Player(pygame.sprite.Sprite):
+     player_image = load_image('torso')
+ 
+-    def __init__(self, pos_x, pos_y):
+-        super().__init__(player_group, all_sprites)
+-        all_sprites.change_layer(self, 4)
++    def __init__(self, pos_x, pos_y, *group):
++        super().__init__(*group)
++        group[-1].change_layer(self, 4)
+         self.image = self.player_image
+         self.rect = self.image.get_rect().move(tile_width * pos_x - 24, tile_height * pos_y - 24)
+         self.change_x = 0
+@@ -204,13 +64,15 @@
+         self.float_x = self.rect.x
+         self.float_y = self.rect.y
+         self.speed = 120 / FPS
+-        self.stat_bar = StatBar()
++        self.stat_bar = StatBar(group[-1])
+         self.weapon = CosmoWeapon()
+ 
+     def take_damage(self, damage):
+         self.stat_bar.change_health(-damage)
+ 
+     def update(self, *args, **kwargs):
++        if self.stat_bar.stats['HP'] <= 0:
++            return 'dead'
+         self.calc_grav()
+         self.float_x += self.change_x
+         self.rect.x = round(self.float_x)
+@@ -286,12 +148,13 @@
+         super().__init__(weapon_group, all_sprites)
+         all_sprites.change_layer(self, 4)
+         self.color = (215, 215, 185)
++        self.dmg = STATS['damage'] * 0.7
+         self.image = pygame.surface.Surface((48, 48), pygame.SRCALPHA, 32)
+         pygame.draw.circle(self.image, self.color, (24, 24), 10, 0)
+         self.image.blit(load_image('cosmo_weapon'), (0, 0))
+         self.orig_image = self.image.copy()
+         self.rect = self.image.get_rect()
+-        self.cooldown = [0, 2 * FPS]
++        self.cooldown = [0, 1 * FPS]
+         self.angle = 0
+ 
+     def update(self, angle=0, *args, **kwargs):
+@@ -304,190 +167,11 @@
+ 
+     def attack(self, vector):
+         if not self.cooldown[0]:
+-            SunDrop(self.rect.center, ('straight', self.angle), vector, friendly=True)
++            SunDrop(self.rect.center, ('straight', self.angle), vector, self.dmg, [enemy_group, floor_group],
++                    projectile_group, all_sprites)
+             self.cooldown[0] = self.cooldown[1]
+ 
+ 
+-class Projectile(pygame.sprite.Sprite):
+-    def __init__(self, name, pos, trajectory, vector, friendly=False):
+-        super().__init__(projectile_group, all_sprites)
+-        all_sprites.change_layer(self, 2)
+-        self.trajectory = trajectory[0]
+-        self.friendly = friendly
+-        if friendly:
+-            self.dmg = STATS['damage']
+-        else:
+-            self.dmg = ENEMY_STATS['damage']
+-        self.change_x, self.change_y = vector
+-        self.frames = cut_sheet(load_image(name + '_projectile'), 8)
+-        self.cur_frame = 0
+-        self.image = self.frames[self.cur_frame]
+-        self.rect = self.image.get_rect()
+-        self.rect.centerx, self.rect.centery = pos
+-        # rot_image = pygame.transform.rotate(self.image, trajectory[1])
+-        # rot_rect = self.rect.copy()
+-        # rot_rect.center = rot_image.get_rect().center
+-        # self.image = rot_image.subsurface(rot_rect).copy()
+-        self.float_x, self.float_y = self.rect.x, self.rect.y
+-        self.speed = 400 / FPS
+-
+-    def update(self, *args, **kwargs):
+-        if self.trajectory == 'parabolic':
+-            self.change_y += 9.8 / FPS
+-        self.float_x += self.change_x * self.speed
+-        self.float_y += self.change_y * self.speed
+-        self.rect.x = round(self.float_x)
+-        self.rect.y = round(self.float_y)
+-
+-    def collisions(self, ratio):
+-        pl_collisions = pygame.sprite.spritecollideany(self, player_group,
+-                                                       collided=pygame.sprite.collide_circle_ratio(ratio))
+-        if pl_collisions and isinstance(pl_collisions, Player) and not self.friendly:
+-            pl_collisions.take_damage(self.dmg)
+-            self.detonate()
+-        en_collisions = pygame.sprite.spritecollideany(self, enemy_group,
+-                                                       collided=pygame.sprite.collide_circle_ratio(ratio))
+-        if en_collisions and isinstance(en_collisions, Enemy) and self.friendly:
+-            en_collisions.take_damage(self.dmg)
+-            self.detonate()
+-
+-        collisions = pygame.sprite.spritecollideany(self,
+-                                                    floor_group, collided=pygame.sprite.collide_circle_ratio(ratio))
+-        if collisions and not isinstance(collisions, Platform):
+-            self.detonate()
+-
+-    def detonate(self):
+-        self.kill()
+-
+-# class Explosion(Projectile):
+-#     def __init__(self, pos):
+-#         super().__init__('explosion', pos, (0, 0), (0, 0))
+-
+-
+-class SunDrop(Projectile):
+-    def __init__(self, pos, angle, vector, friendly=True):
+-        super().__init__('drop', pos, ('straight', angle), vector, friendly)
+-
+-    def update(self, *args, **kwargs):
+-        super().update()
+-        self.cur_frame = (self.cur_frame + 8 / FPS)
+-        self.image = self.frames[round(self.cur_frame) % len(self.frames)]
+-        self.collisions(.625)
+-
+-    def detonate(self):
+-        self.kill()
+-
+-
+-class Plasma(Projectile):
+-    def __init__(self, pos, angle, vector, friendly=False):
+-        super().__init__('plasma', pos, ('straight', angle), vector, friendly)
+-        self.speed = 25 / FPS
+-        self.timer = 1.5
+-
+-    def update(self, *args, **kwargs):
+-        super().update()
+-        self.cur_frame = (self.cur_frame + 8 / FPS)
+-        self.image = self.frames[round(self.cur_frame) % len(self.frames)]
+-        if self.timer == 1.5:
+-            collisions = pygame.sprite.spritecollideany(self, player_group,
+-                                                        collided=pygame.sprite.collide_circle_ratio(1.65))
+-            if collisions:
+-                self.timer -= 1 / FPS
+-        elif 0 < self.timer < 2.5:
+-            self.timer -= 1 / FPS
+-        else:
+-            self.detonate()
+-        self.collisions(.4375)
+-
+-    def detonate(self):
+-        self.kill()
+-
+-
+-class EnemyHealthBar(pygame.sprite.Sprite):
+-    def __init__(self, cur_hp, max_hp):
+-        super().__init__(all_sprites)
+-        all_sprites.change_layer(self, 6)
+-        length = cur_hp * min(max_hp * 2, 800) / max_hp
+-        self.image = pygame.surface.Surface((min(max_hp * 2, 800), 15), pygame.SRCALPHA, 32)
+-        self.rect = self.image.get_rect()
+-        self.rect.x, self.rect.y = FULL_SIZE[0] // 2 - self.rect.width // 2, 15
+-        pygame.draw.rect(self.image, (25, 25, 25), (0, 0, self.rect.width, 15))
+-        pygame.draw.rect(self.image, (155, 0, 15), (0, 0, length, 15))
+-
+-
+-class Enemy(pygame.sprite.Sprite):
+-    def __init__(self, name, frames, pos):
+-        super().__init__(enemy_group, all_sprites)
+-        all_sprites.change_layer(self, 3)
+-        self.hp = self.max_hp = ENEMY_STATS['HP']
+-        self.frames = cut_sheet(load_image(name), frames)
+-        self.cur_frame = 0
+-        self.image = self.frames[self.cur_frame]
+-        self.rect = self.image.get_rect()
+-        self.rect.x = pos[0] * tile_width
+-        self.rect.bottom = (pos[1] + 1) * tile_width
+-        self.float_x, self.float_y = self.rect.x, self.rect.y
+-
+-    def take_damage(self, damage):
+-        global enemy_health
+-        self.hp -= damage
+-        if self.hp <= 0:
+-            self.death()
+-        if not enemy_health:
+-            enemy_health = EnemyHealthBar(self.hp, self.max_hp)
+-        else:
+-            enemy_health.kill()
+-            enemy_health = EnemyHealthBar(self.hp, self.max_hp)
+-
+-    def death(self):
+-        global enemy_health
+-        enemy_health = None
+-        self.kill()
+-
+-
+-class Mortar(Enemy):
+-    def __init__(self, pos, orientation='bottom'):
+-        super().__init__("mortar_" + orientation, 5, pos)
+-        Rail(pos)
+-        self.cur_frame = 2
+-        # self.rect.x += 20
+-        self.charge_effect = cut_sheet(load_image('mortar_charge'), 8)
+-        self.charge = 0
+-        self.image = self.frames[self.cur_frame]
+-        self.image.blit(self.charge_effect[self.charge], (25, 32))
+-        self.rect = self.image.get_rect()
+-        self.rect.x = pos[0] * tile_width
+-        self.rect.bottom = (pos[1] + 1) * tile_width - 2
+-        self.speed = 12 / FPS
+-
+-    def update(self, *args, **kwargs):
+-        self.rect.x -= 64
+-        left = pygame.sprite.spritecollideany(self, rail_group)
+-        self.rect.x += 64
+-        self.rect.x += 64
+-        right = pygame.sprite.spritecollideany(self, rail_group)
+-        self.rect.x -= 64
+-        if PLAYER.rect.x < self.rect.x and left:
+-            self.float_x -= self.speed
+-        elif PLAYER.rect.x > self.rect.x and right:
+-            self.float_x += self.speed
+-        self.rect.x = round(self.float_x)
+-        self.charge += 2 / FPS
+-        point = pygame.math.Vector2(PLAYER.rect.centerx, PLAYER.rect.centery)
+-        mort_pos = pygame.math.Vector2((self.rect.centerx, self.rect.bottom - 11))
+-        angle = (mort_pos - point).as_polar()[1] - 90
+-        self.cur_frame = 2 + max((-2, min([round(angle // 22.5), 2])))
+-        self.image = self.frames[self.cur_frame]
+-        self.image.blit(self.charge_effect[round(self.charge % 7)], (25, 33))
+-        if self.charge > 6:
+-            self.attack()
+-            self.charge = 0
+-
+-    def attack(self):
+-        vectors = [(-0.5, -0.5), (-0.25, -0.75), (0, -1), (0.25, -0.75), (0.5, -0.5)]
+-        Plasma((self.rect.centerx, self.rect.bottom - 11), 22.5 * (self.cur_frame - 2), vectors[self.cur_frame])
+-
+-
+ class Camera:
+     # зададим начальный сдвиг камеры
+     def __init__(self, full, view):
+@@ -524,7 +208,7 @@
+         self.total_shift[1] += self.dy
+ 
+ 
+-PLAYER = Player(15, 8)
++PLAYER = Player(15, 8, player_group, all_sprites)
+ 
+ 
+ def terminate():
+@@ -536,6 +220,10 @@
+     terminate()
+ 
+ 
++def bridge():
++    pass
++
++
+ def start_screen():
+     intro_text = ["ЗАСТАВКА", "",
+                   "Правила игры",
+@@ -566,18 +254,19 @@
+         clock.tick(FPS)
+ 
+ 
+-def level():
++def run_level():
+     global PLAYER
+     running = True
+     levels = os.listdir('levels/')
+-    print(levels)
++    # print(levels)
+     cur_level = choice(levels)
+     level_x, level_y = generate_level(load_level(cur_level))
+     level_size = ((level_x + 1) * tile_width, (level_y + 1) * tile_height)
+     view_size = (min((1920, level_size[0])), min((1080, level_size[1])))
+     screen = pygame.display.set_mode(level_size)
+     camera = Camera(level_size, view_size)
+-    # player = Player(FULL_SIZE[0] // 2, FULL_SIZE[1] // 2)
++    portal = portal_group.sprites()[0]
++    player = player_group.sprites()[0]
+     while running:
+         screen.fill((0, 0, 0))
+         for event in pygame.event.get():
+@@ -586,31 +275,36 @@
+             if event.type == pygame.KEYDOWN:
+                 pressed = pygame.key.get_pressed()
+                 if pressed[pygame.K_UP]:
+-                    PLAYER.jump()
++                    player.jump()
+                 if pressed[pygame.K_DOWN]:
+-                    PLAYER.dismount()
++                    player.dismount()
+                 if pressed[pygame.K_RIGHT]:
+-                    PLAYER.go_right()
++                    player.go_right()
+                 if pressed[pygame.K_LEFT]:
+-                    PLAYER.go_left()
++                    player.go_left()
+             if event.type == pygame.KEYUP:
+                 if event.key == pygame.K_RIGHT:
+-                    PLAYER.stop()
++                    player.stop()
+                 if event.key == pygame.K_LEFT:
+-                    PLAYER.stop()
++                    player.stop()
+             if event.type == pygame.MOUSEBUTTONUP:
+-                a = event.pos[0] - PLAYER.weapon.rect.centerx
+-                b = event.pos[1] - PLAYER.weapon.rect.centery
+-                PLAYER.weapon.attack((a / hypot(a, b), b / hypot(a, b)))
+-        point = pygame.math.Vector2(PLAYER.weapon.rect.centerx, PLAYER.weapon.rect.centery)
++                a = event.pos[0] - player.weapon.rect.centerx
++                b = event.pos[1] - player.weapon.rect.centery
++                player.weapon.attack((a / hypot(a, b), b / hypot(a, b)))
++        point = pygame.math.Vector2(player.weapon.rect.centerx, player.weapon.rect.centery)
+         mouse_pos = pygame.math.Vector2(*pygame.mouse.get_pos())
+         radius, angle = (mouse_pos - point).as_polar()
+-        player_group.update()
++        if PLAYER.update() == 'dead':
++            death_screen()
+         weapon_group.update(-angle)
+-        camera.update(PLAYER)
++        camera.update(player)
+         projectile_group.update()
+         rail_group.update()
+         enemy_group.update()
++        if portal_group.update() == 'teleport':
++            return 'continue'
++        if not enemy_group.sprites() and portal.rect.collidepoint(PLAYER.rect.center):
++            portal.activate()
+         for sprite in all_sprites:
+             camera.apply(sprite)
+         all_sprites.draw(screen)
+@@ -621,4 +315,4 @@
+ 
+ if __name__ == '__main__':
+     # start_screen()
+-    level()
++    run_level()
+Index: rogue'n'scroll dev kit/buildings.py
+===================================================================
+diff --git a/rogue'n'scroll dev kit/buildings.py b/rogue'n'scroll dev kit/buildings.py
+new file mode 100644
+--- /dev/null	
++++ b/rogue'n'scroll dev kit/buildings.py	
+@@ -0,0 +1,77 @@
++import pygame
++from data_funcs import load_image, cut_sheet
++from settings_n_variables import tile_width, tile_height, FPS
++
++
++class Tile(pygame.sprite.Sprite):
++    def __init__(self, pos, im_build, *group):
++        super().__init__(*group)
++        group[-1].change_layer(self, 1)
++        self.image = im_build
++        self.rect = self.image.get_rect()
++        self.rect.x = pos[0] * tile_width
++        self.rect.y = pos[1] * tile_height
++
++    def take_damage(self, *args):
++        pass
++
++    # def update(self, level):
++    #     x, y = self.rect.x // tile_width, self.rect.y // tile_height
++    #     self.image = build(level, x, y)
++
++
++class Platform(Tile):
++    platform_image = load_image('platforms')
++
++    def __init__(self, pos, *group):
++        super().__init__(pos, self.platform_image, *group)
++        self.rect.height = 7
++
++
++class Portal(pygame.sprite.Sprite):
++    charged_frames = cut_sheet(load_image('portal_charged'), 18)
++    uncharged_frames = cut_sheet(load_image('portal_uncharged'), 18)
++
++    def __init__(self, pos, *group):
++        super().__init__(*group)
++        group[-1].change_layer(self, 1)
++        self.charged = False
++        self.cur_frames = 0
++        self.image = self.uncharged_frames[0]
++        self.rect = self.image.get_rect()
++        self.rect.x = pos[0] * tile_width
++        self.rect.y = pos[1] * tile_height
++
++    def activate(self):
++        if round(self.cur_frames) == 0:
++            self.charged = True
++        # self.cur_frames = 0
++
++    def update(self):
++        self.cur_frames = (self.cur_frames + 6 / FPS) % 18
++        if self.charged:
++            self.image = self.charged_frames[round(self.cur_frames // 1)]
++            if self.cur_frames == 17:
++                return 'teleport'
++        else:
++            self.image = self.uncharged_frames[round(self.cur_frames // 1)]
++
++    def teleport(self):
++        pass
++
++
++class Rail(pygame.sprite.Sprite):
++    rail_frames = cut_sheet(load_image('rail'), 8)
++
++    def __init__(self, pos, *group):
++        super().__init__(*group)
++        group[-1].change_layer(self, 3)
++        self.cur_frame = 0
++        self.image = self.rail_frames[self.cur_frame]
++        self.rect = self.image.get_rect()
++        self.rect.x = pos[0] * tile_width
++        self.rect.y = pos[1] * tile_height - 5
++
++    def update(self):
++        self.cur_frame = (self.cur_frame + 6 / FPS) % 7
++        self.image = self.rail_frames[round(self.cur_frame)]
+Index: rogue'n'scroll dev kit/interface.py
+===================================================================
+diff --git a/rogue'n'scroll dev kit/interface.py b/rogue'n'scroll dev kit/interface.py
+new file mode 100644
+--- /dev/null	
++++ b/rogue'n'scroll dev kit/interface.py	
+@@ -0,0 +1,40 @@
++import pygame
++from data_funcs import load_image
++from settings_n_variables import STATS, FULL_SIZE
++
++
++class StatBar(pygame.sprite.Sprite):
++    bar_image = load_image('stat_bar')
++    back_image = load_image('stat_bar_back')
++
++    def __init__(self, *group):
++        super().__init__(*group)
++        group[-1].change_layer(self, 6)
++        self.image = self.back_image.copy()
++        self.stats = STATS.copy()
++        pygame.draw.rect(self.image, (155, 0, 15), (2, 3, 200, 28))
++        pygame.draw.rect(self.image, (15, 0, 155), (2, 38, 160, 21))
++        self.image.blit(self.bar_image, (0, 0))
++        self.rect = self.image.get_rect()
++
++    def update(self):
++        self.image = self.back_image.copy()
++        pygame.draw.rect(self.image, (155, 0, 15), (2, 3, self.stats['HP'] * 200 / STATS['HP'], 28))
++        pygame.draw.rect(self.image, (15, 0, 155), (2, 38, self.stats['MP'] * 160 / STATS['MP'], 21))
++        self.image.blit(self.bar_image, (0, 0))
++
++    def change_health(self, value):
++        self.stats['HP'] += value
++        self.update()
++
++
++class EnemyHealthBar(pygame.sprite.Sprite):
++    def __init__(self, cur_hp, max_hp, *group):
++        super().__init__(*group)
++        group[-1].change_layer(self, 6)
++        length = cur_hp * min(max_hp * 2, 800) / max_hp
++        self.image = pygame.surface.Surface((min(max_hp * 2, 800), 15), pygame.SRCALPHA, 32)
++        self.rect = self.image.get_rect()
++        self.rect.x, self.rect.y = FULL_SIZE[0] // 2 - self.rect.width // 2, 15
++        pygame.draw.rect(self.image, (25, 25, 25), (0, 0, self.rect.width, 15))
++        pygame.draw.rect(self.image, (155, 0, 15), (0, 0, length, 15))
+\ No newline at end of file
+Index: rogue'n'scroll dev kit/initialisation.py
+===================================================================
+diff --git a/rogue'n'scroll dev kit/initialisation.py b/rogue'n'scroll dev kit/initialisation.py
+new file mode 100644
+--- /dev/null	
++++ b/rogue'n'scroll dev kit/initialisation.py	
+@@ -0,0 +1,13 @@
++import pygame
++
++pygame.init()
++enemy_health = None
++all_sprites = pygame.sprite.LayeredUpdates()
++floor_group = pygame.sprite.Group()
++portal_group = pygame.sprite.Group()
++# platform_group = pygame.sprite.Group()
++player_group = pygame.sprite.Group()
++weapon_group = pygame.sprite.Group()
++rail_group = pygame.sprite.Group()
++enemy_group = pygame.sprite.Group()
++projectile_group = pygame.sprite.Group()
+\ No newline at end of file
+Index: rogue'n'scroll dev kit/projectiles_n_movings.py
+===================================================================
+diff --git a/rogue'n'scroll dev kit/projectiles_n_movings.py b/rogue'n'scroll dev kit/projectiles_n_movings.py
+new file mode 100644
+--- /dev/null	
++++ b/rogue'n'scroll dev kit/projectiles_n_movings.py	
+@@ -0,0 +1,88 @@
++import pygame
++from data_funcs import load_image, cut_sheet
++from settings_n_variables import FPS
++from buildings import Platform
++
++
++class Projectile(pygame.sprite.Sprite):
++    def __init__(self, name, pos, trajectory, vector, dmg, collides, *group):
++        super().__init__(*group)
++        group[-1].change_layer(self, 2)
++        self.dmg = dmg
++        self.trajectory = trajectory[0]
++        self.collides = list(collides)
++        self.change_x, self.change_y = vector
++        self.frames = cut_sheet(load_image(name + '_projectile'), 8)
++        self.cur_frame = 0
++        self.image = self.frames[self.cur_frame]
++        self.rect = self.image.get_rect()
++        self.rect.centerx, self.rect.centery = pos
++        # rot_image = pygame.transform.rotate(self.image, trajectory[1])
++        # rot_rect = self.rect.copy()
++        # rot_rect.center = rot_image.get_rect().center
++        # self.image = rot_image.subsurface(rot_rect).copy()
++        self.float_x, self.float_y = self.rect.x, self.rect.y
++        self.speed = 400 / FPS
++
++    def update(self, *args, **kwargs):
++        if self.trajectory == 'parabolic':
++            self.change_y += 9.8 / FPS
++        self.float_x += self.change_x * self.speed
++        self.float_y += self.change_y * self.speed
++        self.rect.x = round(self.float_x)
++        self.rect.y = round(self.float_y)
++
++    def collisions(self, ratio, group):
++        pl_collisions = pygame.sprite.spritecollideany(self, group,
++                                                       collided=pygame.sprite.collide_circle_ratio(ratio))
++        if pl_collisions and not isinstance(pl_collisions, Platform):
++            pl_collisions.take_damage(self.dmg)
++            self.detonate()
++
++    def detonate(self):
++        self.kill()
++
++# class Explosion(Projectile):
++#     def __init__(self, pos):
++#         super().__init__('explosion', pos, (0, 0), (0, 0))
++
++
++class SunDrop(Projectile):
++    def __init__(self, pos, trajectory, vector, dmg, collides, *group):
++        super().__init__('drop', pos, (trajectory, 0), vector, dmg, collides, *group)
++
++    def update(self, *args, **kwargs):
++        super().update()
++        self.cur_frame = (self.cur_frame + 8 / FPS)
++        self.image = self.frames[round(self.cur_frame) % len(self.frames)]
++        for group in self.collides:
++            self.collisions(.625, group)
++
++    def detonate(self):
++        self.kill()
++
++
++class Plasma(Projectile):
++    def __init__(self, pos, trajectory, vector, dmg, collides, *group):
++        super().__init__('plasma', pos, (trajectory, 0), vector, dmg, collides, *group)
++        self.speed = 25 / FPS
++        self.timer = 1.5
++
++    def update(self, *args, **kwargs):
++        super().update()
++        self.cur_frame = (self.cur_frame + 8 / FPS)
++        self.image = self.frames[round(self.cur_frame) % len(self.frames)]
++        if self.timer == 1.5:
++            collisions = pygame.sprite.spritecollideany(self, self.collides[0],
++                                                        collided=pygame.sprite.collide_circle_ratio(1.65))
++            if collisions:
++                self.timer -= 1 / FPS
++        elif 0 < self.timer < 2.5:
++            self.timer -= 1 / FPS
++        else:
++            self.detonate()
++        for group in self.collides:
++            self.collisions(.4375, group)
++
++    def detonate(self):
++        self.kill()
+Index: rogue'n'scroll dev kit/settings_n_variables.py
+===================================================================
+diff --git a/rogue'n'scroll dev kit/settings_n_variables.py b/rogue'n'scroll dev kit/settings_n_variables.py
+new file mode 100644
+--- /dev/null	
++++ b/rogue'n'scroll dev kit/settings_n_variables.py	
+@@ -0,0 +1,5 @@
++FPS = 60
++FULL_SIZE = WIDTH, HEIGHT = 1920, 1080
++tile_width = tile_height = 40
++STATS = {'HP': 100, 'MP': 50, 'damage': 30}
++ENEMY_STATS = {'HP': 100, 'damage': 30}
+\ No newline at end of file
+Index: rogue'n'scroll dev kit/data_funcs.py
+===================================================================
+diff --git a/rogue'n'scroll dev kit/data_funcs.py b/rogue'n'scroll dev kit/data_funcs.py
+new file mode 100644
+--- /dev/null	
++++ b/rogue'n'scroll dev kit/data_funcs.py	
+@@ -0,0 +1,85 @@
++import pygame
++import os
++import sys
++pygame.init()
++FULL_SIZE = WIDTH, HEIGHT = 1920, 1080
++pre_screen = pygame.display.set_mode(FULL_SIZE)
++
++
++def load_image(name, colorkey=None):
++    fullname = os.path.join('data', name + '.png')
++    if not os.path.isfile(fullname):
++        print(f"Файл с изображением '{fullname}' не найден")
++        sys.exit()
++    image = pygame.image.load(fullname)
++    if colorkey is not None:
++        image = image.convert()
++        if colorkey == -1:
++            colorkey = image.get_at((0, 0))
++        image.set_colorkey(colorkey)
++    else:
++        image = image.convert_alpha()
++    return image
++
++
++def cut_sheet(sheet, columns):
++    rect = pygame.Rect(0, 0, sheet.get_width() // columns, sheet.get_height())
++    frames = []
++    for i in range(columns):
++        frame_location = (rect.w * i, 0)
++        frames.append(sheet.subsurface(pygame.Rect(frame_location, rect.size)))
++    return frames
++
++
++def load_level(filename):
++    if not os.path.isfile(os.path.join('levels', filename)):
++        print(f"Файл с уровнем '{filename}' не найден")
++        sys.exit()
++    with open("levels/" + filename, 'r') as mapFile:
++        level_map = [line.strip() for line in mapFile]
++    max_width = max(map(len, level_map))
++    return list(map(lambda x: x.ljust(max_width, '.'), level_map))
++
++
++def build(matrix, x, y):
++    im = pygame.surface.Surface((40, 40))
++    im.fill((100, 100, 120))
++    up = 0 < y and matrix[y - 1][x] == '1'
++    down = y + 1 < len(matrix) and matrix[y + 1][x] == '1'
++    right = x + 1 < len(matrix[0]) and matrix[y][x + 1] == '1'
++    left = x > 0 and matrix[y][x - 1] == '1'
++    if not up:
++        pygame.Surface.blit(im, load_image('top'), (0, 0))
++        if not right:
++            pygame.Surface.blit(im, load_image('top_right'), (0, 0))
++            if down:
++                pygame.Surface.blit(im, load_image('low_right'), (0, 0))
++        if not left:
++            pygame.Surface.blit(im, load_image('top_left'), (0, 0))
++            if down:
++                pygame.Surface.blit(im, load_image('low_left'), (0, 0))
++    if not down:
++        pygame.Surface.blit(im, load_image('bottom'), (0, 0))
++        if not right:
++            pygame.Surface.blit(im, load_image('bottom_right'), (0, 0))
++            if up:
++                pygame.Surface.blit(im, load_image('high_right'), (0, 0))
++        if not left:
++            pygame.Surface.blit(im, load_image('bottom_left'), (0, 0))
++            if up:
++                pygame.Surface.blit(im, load_image('high_left'), (0, 0))
++    if not right and up and down:
++        pygame.Surface.blit(im, load_image('high_right'), (0, 0))
++        pygame.Surface.blit(im, load_image('low_right'), (0, 0))
++    if not left and up and down:
++        pygame.Surface.blit(im, load_image('high_left'), (0, 0))
++        pygame.Surface.blit(im, load_image('low_left'), (0, 0))
++    if left and down and not matrix[y + 1][x - 1] == '1':
++        pygame.Surface.blit(im, load_image('inner_top_right'), (0, 0))
++    if right and down and not matrix[y + 1][x + 1] == '1':
++        pygame.Surface.blit(im, load_image('inner_top_left'), (0, 0))
++    if left and up and not matrix[y - 1][x - 1] == '1':
++        pygame.Surface.blit(im, load_image('inner_bottom_right'), (0, 0))
++    if right and up and not matrix[y - 1][x + 1] == '1':
++        pygame.Surface.blit(im, load_image('inner_bottom_left'), (0, 0))
++    return im
+Index: rogue'n'scroll dev kit/enemies.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import pygame\r\nfrom main import enemy_group, all_sprites, ENEMY_STATS, cut_sheet, load_image, tile_width\r\n\r\n\r\nclass Enemy(pygame.sprite.Sprite):\r\n    def __init__(self, name, frames, pos):\r\n        super().__init__(enemy_group, all_sprites)\r\n        all_sprites.change_layer(self, 3)\r\n        self.hp = self.max_hp = ENEMY_STATS['HP']\r\n        self.frames = cut_sheet(load_image(name), frames)\r\n        self.cur_frame = 0\r\n        self.image = self.frames[self.cur_frame]\r\n        self.rect = self.image.get_rect()\r\n        self.rect.x = pos[0] * tile_width\r\n        self.rect.bottom = (pos[1] + 1) * tile_width\r\n        self.float_x, self.float_y = self.rect.x, self.rect.y\r\n\r\n    def take_damage(self, damage):\r\n        global enemy_health\r\n        self.hp -= damage\r\n        if self.hp <= 0:\r\n            self.death()\r\n        if not enemy_health:\r\n            enemy_health = EnemyHealthBar(self.hp, self.max_hp)\r\n        else:\r\n            enemy_health.kill()\r\n            enemy_health = EnemyHealthBar(self.hp, self.max_hp)\r\n\r\n    def death(self):\r\n        self.kill()\r\n\r\n\r\nclass Mortar(Enemy):\r\n    def __init__(self, pos, orientation='bottom'):\r\n        super().__init__(\"mortar_\" + orientation, 5, pos)\r\n        self.cur_frame = 2\r\n        # self.rect.x += 20\r\n        self.charge_effect = cut_sheet(load_image('mortar_charge'), 8)\r\n        self.charge = 0\r\n        self.image = self.frames[self.cur_frame]\r\n        self.image.blit(self.charge_effect[self.charge], (25, 32))\r\n        self.rect = self.image.get_rect()\r\n        self.rect.x = pos[0] * tile_width\r\n        self.rect.bottom = (pos[1] + 1) * tile_width - 2\r\n        self.speed = 12 / FPS\r\n\r\n    def update(self, *args, **kwargs):\r\n        self.rect.x -= 64\r\n        left = pygame.sprite.spritecollideany(self, rail_group)\r\n        self.rect.x += 64\r\n        self.rect.x += 64\r\n        right = pygame.sprite.spritecollideany(self, rail_group)\r\n        self.rect.x -= 64\r\n        if PLAYER.rect.x < self.rect.x and left:\r\n            self.float_x -= self.speed\r\n        elif PLAYER.rect.x > self.rect.x and right:\r\n            self.float_x += self.speed\r\n        self.rect.x = round(self.float_x)\r\n        self.charge += 2 / FPS\r\n        point = pygame.math.Vector2(PLAYER.rect.centerx, PLAYER.rect.centery)\r\n        mort_pos = pygame.math.Vector2((self.rect.centerx, self.rect.bottom - 11))\r\n        angle = (mort_pos - point).as_polar()[1] - 90\r\n        self.cur_frame = 2 + max((-2, min([round(angle // 22.5), 2])))\r\n        self.image = self.frames[self.cur_frame]\r\n        self.image.blit(self.charge_effect[round(self.charge % 7)], (25, 33))\r\n        if self.charge > 6:\r\n            self.attack()\r\n            self.charge = 0\r\n\r\n    def attack(self):\r\n        vectors = [(-0.5, -0.5), (-0.25, -0.75), (0, -1), (0.25, -0.75), (0.5, -0.5)]\r\n        Plasma((self.rect.centerx, self.rect.bottom - 11), 22.5 * (self.cur_frame - 2), vectors[self.cur_frame])\r\n\r\n\r\n
+===================================================================
+diff --git a/rogue'n'scroll dev kit/enemies.py b/rogue'n'scroll dev kit/enemies.py
+--- a/rogue'n'scroll dev kit/enemies.py	
++++ b/rogue'n'scroll dev kit/enemies.py	
+@@ -1,38 +1,50 @@
+ import pygame
+-from main import enemy_group, all_sprites, ENEMY_STATS, cut_sheet, load_image, tile_width
++from data_funcs import load_image, cut_sheet
++from settings_n_variables import FPS, ENEMY_STATS, tile_width, tile_height
++from initialisation import projectile_group
++from buildings import Rail
++from interface import EnemyHealthBar
++from projectiles_n_movings import Projectile, Plasma, SunDrop
+ 
+ 
+ class Enemy(pygame.sprite.Sprite):
+-    def __init__(self, name, frames, pos):
+-        super().__init__(enemy_group, all_sprites)
+-        all_sprites.change_layer(self, 3)
++    def __init__(self, name, frames, pos, target, hits, *group):
++        super().__init__(*group)
++        group[-1].change_layer(self, 3)
+         self.hp = self.max_hp = ENEMY_STATS['HP']
++        self.bar = None
++        self.dmg = ENEMY_STATS['damage']
++        self.target = target
++        self.hits = hits
+         self.frames = cut_sheet(load_image(name), frames)
+         self.cur_frame = 0
+         self.image = self.frames[self.cur_frame]
+         self.rect = self.image.get_rect()
+         self.rect.x = pos[0] * tile_width
+-        self.rect.bottom = (pos[1] + 1) * tile_width
++        self.rect.bottom = (pos[1] + 1) * tile_height
+         self.float_x, self.float_y = self.rect.x, self.rect.y
+ 
+     def take_damage(self, damage):
+-        global enemy_health
+         self.hp -= damage
++        if not self.bar:
++            self.bar = EnemyHealthBar(self.hp, self.max_hp, self.groups()[-1])
++        else:
++            self.bar.kill()
++            self.bar = EnemyHealthBar(self.hp, self.max_hp, self.groups()[-1])
+         if self.hp <= 0:
+             self.death()
+-        if not enemy_health:
+-            enemy_health = EnemyHealthBar(self.hp, self.max_hp)
+-        else:
+-            enemy_health.kill()
+-            enemy_health = EnemyHealthBar(self.hp, self.max_hp)
+ 
+     def death(self):
++        self.bar.kill()
++        self.bar = None
+         self.kill()
+ 
+ 
+ class Mortar(Enemy):
+-    def __init__(self, pos, orientation='bottom'):
+-        super().__init__("mortar_" + orientation, 5, pos)
++    def __init__(self, pos, rails, target, hits, *group, orientation='bottom'):
++        super().__init__("mortar_" + orientation, 5, pos, target, hits, *group)
++        self.rails = rails
++        self.dmg *= 1.8
+         self.cur_frame = 2
+         # self.rect.x += 20
+         self.charge_effect = cut_sheet(load_image('mortar_charge'), 8)
+@@ -46,18 +58,18 @@
+ 
+     def update(self, *args, **kwargs):
+         self.rect.x -= 64
+-        left = pygame.sprite.spritecollideany(self, rail_group)
++        left = pygame.sprite.spritecollideany(self, self.rails)
+         self.rect.x += 64
+         self.rect.x += 64
+-        right = pygame.sprite.spritecollideany(self, rail_group)
++        right = pygame.sprite.spritecollideany(self, self.rails)
+         self.rect.x -= 64
+-        if PLAYER.rect.x < self.rect.x and left:
++        if self.target.rect.x < self.rect.x and left:
+             self.float_x -= self.speed
+-        elif PLAYER.rect.x > self.rect.x and right:
++        elif self.target.rect.x > self.rect.x and right:
+             self.float_x += self.speed
+         self.rect.x = round(self.float_x)
+         self.charge += 2 / FPS
+-        point = pygame.math.Vector2(PLAYER.rect.centerx, PLAYER.rect.centery)
++        point = pygame.math.Vector2(self.target.rect.centerx, self.target.rect.centery)
+         mort_pos = pygame.math.Vector2((self.rect.centerx, self.rect.bottom - 11))
+         angle = (mort_pos - point).as_polar()[1] - 90
+         self.cur_frame = 2 + max((-2, min([round(angle // 22.5), 2])))
+@@ -69,6 +81,5 @@
+ 
+     def attack(self):
+         vectors = [(-0.5, -0.5), (-0.25, -0.75), (0, -1), (0.25, -0.75), (0.5, -0.5)]
+-        Plasma((self.rect.centerx, self.rect.bottom - 11), 22.5 * (self.cur_frame - 2), vectors[self.cur_frame])
+-
+-
++        Plasma((self.rect.centerx, self.rect.bottom - 11), 22.5 * (self.cur_frame - 2), vectors[self.cur_frame],
++               self.dmg, self.hits, projectile_group, self.groups()[-1])
+Index: rogue'n'scroll dev kit/levels/level1.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>111111111111111111111111111111111111111111111111\r\n1..............................................1\r\n1..............................................1\r\n1..............................................1\r\n1..............................................1\r\n1..............................................1\r\n12222222222222.................................1\r\n1..............................................1\r\n1..............................................1\r\n1..............................................1\r\n1.....................3333333333m333333333333331\r\n1........222222222222211111111122222222222222221\r\n1..............................................1\r\n1..............................................1\r\n12222222222222.................................1\r\n1..............................................1\r\n1..............................................1\r\n1..............................................1\r\n1...............................2222222222222221\r\n1..............................................1\r\n1..............22222222222222..................1\r\n1..............................................1\r\n12222222222222.................................1\r\n1..............................................1\r\n1..............................................1\r\n1..............................................1\r\n1..............................................1\r\n1......1.......................................1\r\n1....111........................1..............1\r\n1....1........................1.1.1............1\r\n1..1.1......................1.1.1.1.1..........1\r\n1..1.1....................1.1.1.1.1.1.1m33333331\r\n111111111111111111111111111111111111111111111111
+===================================================================
+diff --git a/rogue'n'scroll dev kit/levels/level1.txt b/rogue'n'scroll dev kit/levels/level1.txt
+--- a/rogue'n'scroll dev kit/levels/level1.txt	
++++ b/rogue'n'scroll dev kit/levels/level1.txt	
+@@ -11,9 +11,9 @@
+ 1.....................3333333333m333333333333331
+ 1........222222222222211111111122222222222222221
+ 1..............................................1
+-1..............................................1
++1...................222222.....................1
+ 12222222222222.................................1
+-1..............................................1
++1..................................22222.......1
+ 1..............................................1
+ 1..............................................1
+ 1...............................2222222222222221
+@@ -28,6 +28,6 @@
+ 1......1.......................................1
+ 1....111........................1..............1
+ 1....1........................1.1.1............1
+-1..1.1......................1.1.1.1.1..........1
+-1..1.1....................1.1.1.1.1.1.1m33333331
++1..1.1........4.............1.1.1.1.1..........1
++1..1.1....................1.1.1.1.1.1.1333333331
+ 111111111111111111111111111111111111111111111111
+\ No newline at end of file
