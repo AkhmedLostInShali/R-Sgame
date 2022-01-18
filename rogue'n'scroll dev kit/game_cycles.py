@@ -53,6 +53,9 @@ class Player(pygame.sprite.Sprite):
         self.speed = 120 / FPS
         self.weapon = CosmoWeapon()
 
+    def take_damage(self, damage):
+        self.stat_bar.change_health(-damage)
+
     def update(self, *args):
         self.calc_grav()
         self.float_x += self.change_x
