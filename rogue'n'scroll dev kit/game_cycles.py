@@ -20,6 +20,7 @@ player = None
 def generate_level(level):
     new_player, x, y = None, None, None
     player_xy = (15, 8)
+    new_player = Player(*player_xy)
     for y in range(len(level)):
         for x in range(len(level[y])):
             if level[y][x] == '1':
@@ -32,9 +33,8 @@ def generate_level(level):
                 # Portal((x, y), portal_group, all_sprites)
             elif level[y][x] == 'm':
                 Rail((x, y), rail_group, all_sprites)
-                Mortar((x, y), rail_group, PLAYER, [player_group, floor_group], enemy_group, all_sprites)
+                Mortar((x, y), rail_group, new_player, [player_group, floor_group], enemy_group, all_sprites)
     # floor_group.update(level)
-    new_player = Player(*player_xy)
     return new_player, x, y
 
 
@@ -146,7 +146,8 @@ class CosmoWeapon(pygame.sprite.Sprite):
 
     def attack(self, vector):
         if not self.cooldown[0]:
-            SunDrop(self.rect.center, ('straight', self.angle), vector)
+            SunDrop(self.rect.center, ('straight', self.angle), vector, self.dmg,
+                    (enemy_group, floor_group), projectile_group, all_sprites)
             self.cooldown[0] = self.cooldown[1]
 
 
@@ -233,7 +234,7 @@ def main():
     view_size = (min((1920, FULL_SIZE[0])), min((1080, FULL_SIZE[1])))
     screen = pygame.display.set_mode(FULL_SIZE)
     camera = Camera(FULL_SIZE, view_size)
-    stat_bar = StatBar()
+    stat_bar = StatBar(all_sprites)
     # player = Player(FULL_SIZE[0] // 2, FULL_SIZE[1] // 2)
     while running:
         screen.fill((0, 0, 0))
