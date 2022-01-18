@@ -28,36 +28,36 @@ class Platform(Tile):
         self.rect.height = 7
 
 
-# class Portal(pygame.sprite.Sprite):
-#     charged_frames = cut_sheet(load_image('portal_charged'), 18)
-#     uncharged_frames = cut_sheet(load_image('portal_uncharged'), 18)
-#
-#     def __init__(self, pos, *group):
-#         super().__init__(*group)
-#         group[-1].change_layer(self, 1)
-#         self.charged = False
-#         self.cur_frames = 0
-#         self.image = self.uncharged_frames[0]
-#         self.rect = self.image.get_rect()
-#         self.rect.x = pos[0] * tile_width
-#         self.rect.y = pos[1] * tile_height
-#
-#     def activate(self):
-#         if round(self.cur_frames) == 0:
-#             self.charged = True
-#         # self.cur_frames = 0
-#
-#     def update(self):
-#         self.cur_frames = (self.cur_frames + 6 / FPS) % 18
-#         if self.charged:
-#             self.image = self.charged_frames[round(self.cur_frames // 1)]
-#             if self.cur_frames == 17:
-#                 return 'teleport'
-#         else:
-#             self.image = self.uncharged_frames[round(self.cur_frames // 1)]
-#
-#     def teleport(self):
-#         pass
+class Portal(pygame.sprite.Sprite):
+    charged_frames = cut_sheet(load_image('portal_charged'), 18)
+    uncharged_frames = cut_sheet(load_image('portal_uncharged'), 18)
+
+    def __init__(self, pos, *group):
+        super().__init__(*group)
+        group[-1].change_layer(self, 1)
+        self.charged = False
+        self.cur_frames = 0
+        self.image = self.uncharged_frames[0]
+        self.rect = self.image.get_rect()
+        self.rect.x = pos[0] * tile_width
+        self.rect.y = pos[1] * tile_height
+
+    def activate(self):
+        if round(self.cur_frames) == 0:
+            self.charged = True
+        # self.cur_frames = 0
+
+    def update(self):
+        self.cur_frames = (self.cur_frames + 6 / FPS) % 18
+        if self.charged:
+            self.image = self.charged_frames[round(self.cur_frames // 1)]
+            if self.cur_frames > 17:
+                return 'teleport'
+        else:
+            self.image = self.uncharged_frames[round(self.cur_frames // 1)]
+
+    def teleport(self):
+        pass
 
 
 class Rail(pygame.sprite.Sprite):

@@ -1,56 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="37fad298-4819-4ef2-83ec-da95e444dfae" name="Changes" comment="wow, i found my lost sprites!&#10;epic comeback">
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/all.psd" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/all.psd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/bottom.png" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/bottom.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/bottom_left.png" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/bottom_left.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/bottom_right.png" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/bottom_right.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/cosmo_weapon.png" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/cosmo_weapon.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/cosmo_weapon.psd" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/cosmo_weapon.psd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/drop_projectile.png" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/drop_projectile.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/drop_projectile.psd" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/drop_projectile.psd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/explosion_projectile.psd" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/explosion_projectile.psd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/high_left.png" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/high_left.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/high_right.png" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/high_right.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/high_right.psd" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/high_right.psd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/inner_bottom_left.png" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/inner_bottom_left.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/inner_bottom_right.png" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/inner_bottom_right.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/inner_top_left.png" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/inner_top_left.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/inner_top_right.png" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/inner_top_right.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/inner_top_right.psd" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/inner_top_right.psd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/low_left.png" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/low_left.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/low_right.png" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/low_right.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/low_right.psd" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/low_right.psd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/mortair.psd" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/mortair.psd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/mortar.png" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/mortar.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/mortar.psd" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/mortar.psd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/mortar_bottom.png" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/mortar_bottom.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/mortar_charge.png" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/mortar_charge.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/mortar_charge.psd" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/mortar_charge.psd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/plasma_projectile.png" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/plasma_projectile.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/plasma_projectile.psd" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/plasma_projectile.psd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/platforms.png" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/platforms.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/platforms.psd" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/platforms.psd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/portal.psd" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/portal.psd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/portal_charged.png" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/portal_charged.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/portal_charged.psd" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/portal_charged.psd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/portal_uncharged.png" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/portal_uncharged.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/portal_uncharged.psd" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/portal_uncharged.psd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/rail.png" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/rail.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/rail.psd" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/rail.psd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/stat_bar.png" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/stat_bar.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/stat_bar.psd" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/stat_bar.psd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/stat_bar_back.png" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/stat_bar_back.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/stat_bar_back.psd" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/stat_bar_back.psd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/top.png" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/top.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/top_left.png" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/top_left.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/top_right.png" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/top_right.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/torso.png" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/torso.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/torso.psd" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/torso.psd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/torso_gold.png" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/torso_gold.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/data/torso_gold.psd" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/torso_gold.psd" afterDir="false" />
+    <list default="true" id="77be2f52-3824-48b3-a1ab-083928811c14" name="Changes" comment="fixing">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/shelved.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/shelved.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/buildings.py" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/buildings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/game_cycles.py" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/game_cycles.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/interface.py" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/interface.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/levels/level1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/levels/level1.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -327,13 +284,23 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/rogue'n'scroll dev kit/game_cycles.py</url>
-          <line>211</line>
+          <line>217</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/rogue'n'scroll dev kit/game_cycles.py</url>
-          <line>172</line>
-          <option name="timeStamp" value="14" />
+          <line>287</line>
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/rogue'n'scroll dev kit/buildings.py</url>
+          <line>53</line>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/rogue'n'scroll dev kit/buildings.py</url>
+          <line>54</line>
+          <option name="timeStamp" value="20" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

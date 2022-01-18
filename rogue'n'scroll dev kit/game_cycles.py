@@ -3,7 +3,7 @@ import sys
 import pygame
 from math import hypot
 from data_funcs import load_image, load_level, build, cut_sheet
-from buildings import Tile, Platform, Rail
+from buildings import Tile, Platform, Rail, Portal
 from settings_n_variables import FPS, FULL_SIZE, WIDTH, HEIGHT, tile_width, tile_height, STATS, ENEMY_STATS
 from projectiles_n_movings import Projectile, Plasma, SunDrop
 from enemies import Enemy, Mortar
@@ -29,8 +29,8 @@ def generate_level(level):
                 Platform((x, y), floor_group, all_sprites)
             elif level[y][x] == '3':
                 Rail((x, y), rail_group, all_sprites)
-            # elif level[y][x] == '4':
-                # Portal((x, y), portal_group, all_sprites)
+            elif level[y][x] == '4':
+                Portal((x, y), portal_group, all_sprites)
             elif level[y][x] == 'm':
                 Rail((x, y), rail_group, all_sprites)
                 Mortar((x, y), rail_group, new_player, [player_group, floor_group], enemy_group, all_sprites)
@@ -51,12 +51,18 @@ class Player(pygame.sprite.Sprite):
         self.float_x = self.rect.x
         self.float_y = self.rect.y
         self.speed = 120 / FPS
+        self.stat_bar = StatBar(all_sprites)
         self.weapon = CosmoWeapon()
 
     def take_damage(self, damage):
         self.stat_bar.change_health(-damage)
 
+    def check_pulse(self):
+        return self.stat_bar.is_alive()
+
     def update(self, *args):
+        if not self.check_pulse():
+            return 'death'
         self.calc_grav()
         self.float_x += self.change_x
         self.rect.x = round(self.float_x)
@@ -114,7 +120,7 @@ class Player(pygame.sprite.Sprite):
         on_platform = ground_hit and isinstance(ground_hit, Platform) and self.rect.bottom == ground_hit.rect.top + 1
         self.rect.y -= 1
         if on_platform:
-            self.fall = FPS * 1.5
+            self.fall = FPS // 3
 
     def go_left(self):
         self.change_x = -self.speed
@@ -128,7 +134,7 @@ class Player(pygame.sprite.Sprite):
 
 class CosmoWeapon(pygame.sprite.Sprite):
     def __init__(self):
-        super().__init__(player_group, all_sprites)
+        super().__init__(weapon_group, all_sprites)
         self.color = (215, 215, 185)
         self.dmg = STATS['damage'] * 0.7
         self.image = pygame.surface.Surface((48, 48), pygame.SRCALPHA, 32)
@@ -229,6 +235,10 @@ def start_screen():
         clock.tick(FPS)
 
 
+def death_screen():
+    terminate()
+
+
 def main():
     global player
     running = True
@@ -237,8 +247,7 @@ def main():
     view_size = (min((1920, FULL_SIZE[0])), min((1080, FULL_SIZE[1])))
     screen = pygame.display.set_mode(FULL_SIZE)
     camera = Camera(FULL_SIZE, view_size)
-    stat_bar = StatBar(all_sprites)
-    # player = Player(FULL_SIZE[0] // 2, FULL_SIZE[1] // 2)
+    portal = portal_group.sprites()[0]
     while running:
         screen.fill((0, 0, 0))
         for event in pygame.event.get():
@@ -266,11 +275,17 @@ def main():
         point = pygame.math.Vector2(player.weapon.rect.centerx, player.weapon.rect.centery)
         mouse_pos = pygame.math.Vector2(*pygame.mouse.get_pos())
         radius, angle = (mouse_pos - point).as_polar()
-        player_group.update(-angle)
+        if player.update() == 'death':
+            death_screen()
+        weapon_group.update(-angle)
         camera.update(player)
         projectile_group.update()
         rail_group.update()
         enemy_group.update()
+        if not enemy_group.sprites() and portal.rect.collidepoint(player.rect.center):
+            portal.activate()
+        if portal.update() == 'teleport':
+            return 'teleport'
         for sprite in all_sprites:
             camera.apply(sprite)
         all_sprites.draw(screen)

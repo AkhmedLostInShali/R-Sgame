@@ -26,6 +26,9 @@ class StatBar(pygame.sprite.Sprite):
     def change_health(self, value):
         self.stats['HP'] += value
         self.update()
+        
+    def is_alive(self):
+        return self.stats['HP'] > 0
 
 
 class EnemyHealthBar(pygame.sprite.Sprite):
