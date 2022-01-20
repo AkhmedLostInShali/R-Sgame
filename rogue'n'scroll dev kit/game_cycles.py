@@ -3,7 +3,7 @@ import sys
 import pygame
 from math import hypot
 from data_funcs import load_image, load_level, build, cut_sheet
-from buildings import Tile, Platform, Rail, Portal
+from buildings import Tile, Platform, Rail, Portal, Background
 from settings_n_variables import FPS, FULL_SIZE, WIDTH, HEIGHT, tile_width, tile_height, STATS, ENEMY_STATS
 from projectiles_n_movings import Projectile, Plasma, SunDrop
 from enemies import Enemy, Mortar
@@ -43,6 +43,8 @@ class Player(pygame.sprite.Sprite):
 
     def __init__(self, pos_x, pos_y):
         super().__init__(player_group, all_sprites)
+        self.static = 'float'
+        all_sprites.change_layer(self, 4)
         self.image = self.player_image
         self.rect = self.image.get_rect().move(tile_width * pos_x - 24, tile_height * pos_y - 24)
         self.change_x = 0
@@ -51,11 +53,18 @@ class Player(pygame.sprite.Sprite):
         self.float_x = self.rect.x
         self.float_y = self.rect.y
         self.speed = 120 / FPS
+        self.invincibility = 0
         self.stat_bar = StatBar(all_sprites)
         self.weapon = CosmoWeapon()
 
+    def add_values(self, value):
+        self.stat_bar.change_health(value[0])
+        self.stat_bar.change_mana(value[2])
+
     def take_damage(self, damage):
-        self.stat_bar.change_health(-damage)
+        if not self.invincibility:
+            self.stat_bar.change_health(-damage)
+            self.invincibility = 1.25 * FPS
 
     def check_pulse(self):
         return self.stat_bar.is_alive()
@@ -95,6 +104,7 @@ class Player(pygame.sprite.Sprite):
         self.fall -= 1 if self.fall else 0
         self.weapon.rect.x = self.rect.x + 8
         self.weapon.rect.y = self.rect.y + 2
+        self.invincibility = max(self.invincibility - 1, 0)
 
     def calc_grav(self):
         if self.change_y == 0:
@@ -135,6 +145,8 @@ class Player(pygame.sprite.Sprite):
 class CosmoWeapon(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__(weapon_group, all_sprites)
+        self.static = False
+        all_sprites.change_layer(self, 5)
         self.color = (215, 215, 185)
         self.dmg = STATS['damage'] * 0.7
         self.image = pygame.surface.Surface((48, 48), pygame.SRCALPHA, 32)
@@ -171,11 +183,11 @@ class Camera:
 
     # сдвинуть объект obj на смещение камеры
     def apply(self, obj):
-        if isinstance(obj, StatBar):
+        if obj.static and obj.static != 'float':
             return
         obj.rect.x += self.dx
         obj.rect.y += self.dy
-        if isinstance(obj, Player) or isinstance(obj, Projectile) or isinstance(obj, Enemy):
+        if obj.static == 'float':
             obj.float_x += self.dx
             obj.float_y += self.dy
 
@@ -243,6 +255,7 @@ def main():
     global player
     running = True
     player, level_x, level_y = generate_level(load_level('level1.txt'))
+    Background('wall_background', all_sprites)
     FULL_SIZE = ((level_x + 1) * tile_width, (level_y + 1) * tile_height)
     view_size = (min((1920, FULL_SIZE[0])), min((1080, FULL_SIZE[1])))
     screen = pygame.display.set_mode(FULL_SIZE)
@@ -285,7 +298,7 @@ def main():
         if not enemy_group.sprites() and portal.rect.collidepoint(player.rect.center):
             portal.activate()
         if portal.update() == 'teleport':
-            return 'teleport'
+            return portal.xp
         for sprite in all_sprites:
             camera.apply(sprite)
         all_sprites.draw(screen)
@@ -296,4 +309,4 @@ def main():
 
 if __name__ == '__main__':
     # start_screen()
-    main()
+    print(main())

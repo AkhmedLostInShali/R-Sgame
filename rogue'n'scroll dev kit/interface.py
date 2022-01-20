@@ -9,6 +9,7 @@ class StatBar(pygame.sprite.Sprite):
 
     def __init__(self, *group):
         super().__init__(*group)
+        self.static = True
         group[-1].change_layer(self, 6)
         self.image = self.back_image.copy()
         self.stats = STATS.copy()
@@ -24,7 +25,11 @@ class StatBar(pygame.sprite.Sprite):
         self.image.blit(self.bar_image, (0, 0))
 
     def change_health(self, value):
-        self.stats['HP'] += value
+        self.stats['HP'] = min(self.stats['HP'] + value, STATS['HP'])
+        self.update()
+
+    def change_mana(self, value):
+        self.stats['MP'] = min(self.stats['MP'] + value, STATS['MP'])
         self.update()
         
     def is_alive(self):
@@ -34,6 +39,7 @@ class StatBar(pygame.sprite.Sprite):
 class EnemyHealthBar(pygame.sprite.Sprite):
     def __init__(self, cur_hp, max_hp, *group):
         super().__init__(*group)
+        self.static = True
         group[-1].change_layer(self, 6)
         length = cur_hp * min(max_hp * 2, 800) / max_hp
         self.image = pygame.surface.Surface((min(max_hp * 2, 800), 15), pygame.SRCALPHA, 32)

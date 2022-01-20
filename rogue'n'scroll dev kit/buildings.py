@@ -3,9 +3,19 @@ from data_funcs import load_image, cut_sheet
 from settings_n_variables import tile_width, tile_height, FPS
 
 
+class Background(pygame.sprite.Sprite):
+    def __init__(self, back_name, *group):
+        super().__init__(*group)
+        self.static = False
+        group[-1].change_layer(self, 0)
+        self.image = load_image(back_name)
+        self.rect = self.image.get_rect()
+
+
 class Tile(pygame.sprite.Sprite):
     def __init__(self, pos, im_build, *group):
         super().__init__(*group)
+        self.static = False
         group[-1].change_layer(self, 1)
         self.image = im_build
         self.rect = self.image.get_rect()
@@ -35,7 +45,9 @@ class Portal(pygame.sprite.Sprite):
     def __init__(self, pos, *group):
         super().__init__(*group)
         group[-1].change_layer(self, 1)
+        self.static = False
         self.charged = False
+        self.xp = 0
         self.cur_frames = 0
         self.image = self.uncharged_frames[0]
         self.rect = self.image.get_rect()
@@ -46,6 +58,9 @@ class Portal(pygame.sprite.Sprite):
         if round(self.cur_frames) == 0:
             self.charged = True
         # self.cur_frames = 0
+
+    def add_values(self, value):
+        self.xp += value[1]
 
     def update(self):
         self.cur_frames = (self.cur_frames + 6 / FPS) % 18
@@ -65,6 +80,7 @@ class Rail(pygame.sprite.Sprite):
 
     def __init__(self, pos, *group):
         super().__init__(*group)
+        self.static = False
         group[-1].change_layer(self, 3)
         self.cur_frame = 0
         self.image = self.rail_frames[self.cur_frame]

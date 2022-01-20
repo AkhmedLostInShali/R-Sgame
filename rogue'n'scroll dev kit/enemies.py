@@ -1,15 +1,17 @@
 import pygame
+from random import randrange
 from data_funcs import load_image, cut_sheet
 from settings_n_variables import FPS, ENEMY_STATS, tile_width, tile_height
-from initialisation import projectile_group
+from initialisation import projectile_group, portal_group, player_group
 from buildings import Rail
 from interface import EnemyHealthBar
-from projectiles_n_movings import Projectile, Plasma, SunDrop
+from projectiles_n_movings import Projectile, Plasma, SunDrop, Orb
 
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, name, frames, pos, target, hits, *group):
         super().__init__(*group)
+        self.static = 'float'
         group[-1].change_layer(self, 3)
         self.hp = self.max_hp = ENEMY_STATS['HP']
         self.bar = None
@@ -23,9 +25,12 @@ class Enemy(pygame.sprite.Sprite):
         self.rect.x = pos[0] * tile_width
         self.rect.bottom = (pos[1] + 1) * tile_height
         self.float_x, self.float_y = self.rect.x, self.rect.y
+        self.invincibility = 0
 
     def take_damage(self, damage):
-        self.hp -= damage
+        if not self.invincibility:
+            self.hp -= damage
+            self.invincibility = 0.75 * FPS
         if not self.bar:
             self.bar = EnemyHealthBar(self.hp, self.max_hp, self.groups()[-1])
         else:
@@ -37,6 +42,10 @@ class Enemy(pygame.sprite.Sprite):
     def death(self):
         self.bar.kill()
         self.bar = None
+        Orb((randrange(0, 20), 0, randrange(10, 20)), self.rect.center, player_group.sprites()[0],
+            projectile_group, self.groups()[-1])
+        Orb((0, randrange(10, 20), 0), self.rect.center, portal_group.sprites()[0],
+            projectile_group, self.groups()[-1])
         self.kill()
 
 
@@ -68,7 +77,7 @@ class Mortar(Enemy):
         elif self.target.rect.x > self.rect.x and right:
             self.float_x += self.speed
         self.rect.x = round(self.float_x)
-        self.charge += 2 / FPS
+        self.charge += 0.5 / FPS
         point = pygame.math.Vector2(self.target.rect.centerx, self.target.rect.centery)
         mort_pos = pygame.math.Vector2((self.rect.centerx, self.rect.bottom - 11))
         angle = (mort_pos - point).as_polar()[1] - 90
@@ -78,6 +87,7 @@ class Mortar(Enemy):
         if self.charge > 6:
             self.attack()
             self.charge = 0
+        self.invincibility = max(self.invincibility - 1, 0)
 
     def attack(self):
         vectors = [(-0.5, -0.5), (-0.25, -0.75), (0, -1), (0.25, -0.75), (0.5, -0.5)]
