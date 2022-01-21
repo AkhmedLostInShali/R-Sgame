@@ -17,10 +17,11 @@ screen = pygame.display.set_mode(FULL_SIZE)
 player = None
 
 
-def generate_level(level):
+def generate_level(level, player=False):
     new_player, x, y = None, None, None
-    player_xy = (15, 8)
-    new_player = Player(*player_xy)
+    if not player:
+        player_xy = (15, 8)
+        new_player = Player(*player_xy)
     for y in range(len(level)):
         for x in range(len(level[y])):
             if level[y][x] == '1':
@@ -33,7 +34,8 @@ def generate_level(level):
                 Portal((x, y), portal_group, all_sprites)
             elif level[y][x] == 'm':
                 Rail((x, y), rail_group, all_sprites)
-                Mortar((x, y), rail_group, new_player, [player_group, floor_group], enemy_group, all_sprites)
+                Mortar((x, y), rail_group, new_player if not player else player,
+                       [player_group, floor_group], enemy_group, all_sprites)
     # floor_group.update(level)
     return new_player, x, y
 
@@ -251,10 +253,24 @@ def death_screen():
     terminate()
 
 
-def main():
+def main(number=0):
     global player
+    if number:
+        for sprite in all_sprites:
+            if isinstance(sprite, Player) or isinstance(sprite, CosmoWeapon):
+                pass
+            elif isinstance(sprite, StatBar):
+                stat_bar = sprite
+            else:
+                sprite.kill()
     running = True
-    player, level_x, level_y = generate_level(load_level('level1.txt'))
+    if number:
+        player = player_group.sprites()[0]
+        player.weapon = weapon_group.sprites()[0]
+        # player.stat_bar = stat_bar
+        _, level_x, level_y = generate_level(load_level('level1.txt'), player=player)
+    else:
+        player, level_x, level_y = generate_level(load_level('level1.txt'))
     Background('wall_background', all_sprites)
     FULL_SIZE = ((level_x + 1) * tile_width, (level_y + 1) * tile_height)
     view_size = (min((1920, FULL_SIZE[0])), min((1080, FULL_SIZE[1])))
@@ -298,15 +314,29 @@ def main():
         if not enemy_group.sprites() and portal.rect.collidepoint(player.rect.center):
             portal.activate()
         if portal.update() == 'teleport':
-            return portal.xp
+            return portal.xp,  True
         for sprite in all_sprites:
             camera.apply(sprite)
         all_sprites.draw(screen)
         pygame.display.flip()
         clock.tick(FPS)
     pygame.quit()
+    return 0, False
 
 
 if __name__ == '__main__':
     # start_screen()
-    print(main())
+    game_is_on = True
+    xp = 0
+    res = main()
+    if res:
+        xp += res[0]
+    else:
+        print(xp)
+    while game_is_on:
+        res = main(number=1)
+        if res:
+            xp += res[0]
+        else:
+            print(xp)
+        game_is_on = res[1]
