@@ -9,7 +9,7 @@ from projectiles_n_movings import Projectile, Plasma, SunDrop
 from enemies import Enemy, Mortar
 from initialisation import enemy_group, player_group, projectile_group, all_sprites, portal_group, rail_group
 from initialisation import floor_group, weapon_group
-from interface import StatBar, EnemyHealthBar
+from interface import StatBar, EnemyHealthBar, Button
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -216,7 +216,22 @@ def terminate():
 
 
 def bridge():
-    pass
+    # screen = pygame.display.set_mode(FULL_SIZE)
+    bgd = pygame.surface.Surface(FULL_SIZE)
+    bgd.fill((0, 0, 0))
+    all_sprites.clear(screen, bgd)
+    buttons_group = pygame.sprite.Group()
+    Button(0, 'temp_HP_boost', buttons_group)
+    Button(1, 'temp_MP_boost', buttons_group)
+    Button(2, 'temp_DMG_boost', buttons_group)
+    running = True
+    while running:
+        screen.fill((0, 0, 0))
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                terminate()
+        buttons_group.draw(screen)
+        pygame.display.flip()
 
 
 def start_screen():
@@ -274,14 +289,14 @@ def main(number=0):
     Background('wall_background', all_sprites)
     FULL_SIZE = ((level_x + 1) * tile_width, (level_y + 1) * tile_height)
     view_size = (min((1920, FULL_SIZE[0])), min((1080, FULL_SIZE[1])))
-    screen = pygame.display.set_mode(FULL_SIZE)
+    # screen = pygame.display.set_mode(FULL_SIZE)
     camera = Camera(FULL_SIZE, view_size)
     portal = portal_group.sprites()[0]
     while running:
         screen.fill((0, 0, 0))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                running = False
+                terminate()
             if event.type == pygame.KEYDOWN:
                 pressed = pygame.key.get_pressed()
                 if pressed[pygame.K_UP]:
@@ -320,12 +335,12 @@ def main(number=0):
         all_sprites.draw(screen)
         pygame.display.flip()
         clock.tick(FPS)
-    pygame.quit()
     return 0, False
 
 
 if __name__ == '__main__':
     # start_screen()
+    boosts = []
     game_is_on = True
     xp = 0
     res = main()
@@ -334,6 +349,7 @@ if __name__ == '__main__':
     else:
         print(xp)
     while game_is_on:
+        boosts.append(bridge())
         res = main(number=1)
         if res:
             xp += res[0]

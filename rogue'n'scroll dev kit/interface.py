@@ -47,3 +47,14 @@ class EnemyHealthBar(pygame.sprite.Sprite):
         self.rect.x, self.rect.y = FULL_SIZE[0] // 2 - self.rect.width // 2, 15
         pygame.draw.rect(self.image, (25, 25, 25), (0, 0, self.rect.width, 15))
         pygame.draw.rect(self.image, (155, 0, 15), (0, 0, length, 15))
+
+
+class Button(pygame.sprite.Sprite):
+    def __init__(self, pos, name, *group):
+        super().__init__(*group)
+        self.static = True
+        self.name = name
+        self.image = load_image('tips/' + name)
+        self.rect = self.image.get_rect()
+        self.rect.x = FULL_SIZE[0] // 2 - (0.8 + (pos - 1)) * self.rect.width
+        self.rect.y = FULL_SIZE[1] // 2 - 0.5 * self.rect.width
