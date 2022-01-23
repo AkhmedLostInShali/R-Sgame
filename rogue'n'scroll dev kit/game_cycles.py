@@ -313,7 +313,6 @@ def run_level(buff=None, number=0, name='level1.txt'):
     Background('wall_background', all_sprites)
     FULL_SIZE = ((level_x + 1) * tile_width, (level_y + 1) * tile_height)
     view_size = (min((1920, FULL_SIZE[0])), min((1080, FULL_SIZE[1])))
-    # screen = pygame.display.set_mode(FULL_SIZE)
     camera = Camera(FULL_SIZE, view_size)
     portal = portal_group.sprites()[0]
     while running:
