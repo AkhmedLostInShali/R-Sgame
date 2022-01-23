@@ -1,7 +1,7 @@
 import pygame
 from random import randrange
 from data_funcs import load_image, cut_sheet
-from settings_n_variables import FPS, ENEMY_STATS, tile_width, tile_height
+from settings_n_variables import FPS, tile_width, tile_height
 from initialisation import projectile_group, portal_group, player_group
 from buildings import Rail
 from interface import EnemyHealthBar
@@ -9,13 +9,13 @@ from projectiles_n_movings import Projectile, Plasma, SunDrop, Orb
 
 
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, name, frames, pos, target, hits, *group):
+    def __init__(self, name, frames, pos, target, stats, hits, *group):
         super().__init__(*group)
         self.static = 'float'
         group[-1].change_layer(self, 3)
-        self.hp = self.max_hp = ENEMY_STATS['HP']
+        self.hp = self.max_hp = stats['HP']
         self.bar = None
-        self.dmg = ENEMY_STATS['damage']
+        self.dmg = stats['damage']
         self.target = target
         self.hits = hits
         self.frames = cut_sheet(load_image(name), frames)
@@ -63,9 +63,9 @@ class Mortar(Enemy):
         self.rect = self.image.get_rect()
         self.rect.x = pos[0] * tile_width
         self.rect.bottom = (pos[1] + 1) * tile_width - 2
-        self.speed = 12 / FPS
+        self.speed = 36 / FPS
 
-    def update(self, *args, **kwargs):
+    def update(self):
         self.rect.x -= 64
         left = pygame.sprite.spritecollideany(self, self.rails)
         self.rect.x += 64
@@ -77,7 +77,7 @@ class Mortar(Enemy):
         elif self.target.rect.x > self.rect.x and right:
             self.float_x += self.speed
         self.rect.x = round(self.float_x)
-        self.charge += 0.5 / FPS
+        self.charge += 1 / FPS
         point = pygame.math.Vector2(self.target.rect.centerx, self.target.rect.centery)
         mort_pos = pygame.math.Vector2((self.rect.centerx, self.rect.bottom - 11))
         angle = (mort_pos - point).as_polar()[1] - 90

@@ -13,6 +13,7 @@ class StatBar(pygame.sprite.Sprite):
         group[-1].change_layer(self, 6)
         self.image = self.back_image.copy()
         self.stats = STATS.copy()
+        self.HP_buff, self.MP_buff = 1, 1
         pygame.draw.rect(self.image, (155, 0, 15), (2, 3, 200, 28))
         pygame.draw.rect(self.image, (15, 0, 155), (2, 38, 160, 21))
         self.image.blit(self.bar_image, (0, 0))
@@ -20,20 +21,24 @@ class StatBar(pygame.sprite.Sprite):
 
     def update(self):
         self.image = self.back_image.copy()
-        pygame.draw.rect(self.image, (155, 0, 15), (2, 3, self.stats['HP'] * 200 / STATS['HP'], 28))
-        pygame.draw.rect(self.image, (15, 0, 155), (2, 38, self.stats['MP'] * 160 / STATS['MP'], 21))
+        pygame.draw.rect(self.image, (155, 0, 15), (2, 3, self.stats['HP'] * 200 / (STATS['HP'] * self.HP_buff), 28))
+        pygame.draw.rect(self.image, (15, 0, 155), (2, 38, self.stats['MP'] * 160 / (STATS['MP'] * self.MP_buff), 21))
         self.image.blit(self.bar_image, (0, 0))
 
     def change_health(self, value):
-        self.stats['HP'] = min(self.stats['HP'] + value, STATS['HP'])
+        self.stats['HP'] = min(self.stats['HP'] + value, STATS['HP'] * self.HP_buff)
         self.update()
 
     def change_mana(self, value):
-        self.stats['MP'] = min(self.stats['MP'] + value, STATS['MP'])
+        self.stats['MP'] = min(self.stats['MP'] + value, STATS['MP'] * self.MP_buff)
         self.update()
         
     def is_alive(self):
         return self.stats['HP'] > 0
+
+    def increase_max(self, mana=0, health=0):
+        self.MP_buff += mana
+        self.HP_buff += health
 
 
 class EnemyHealthBar(pygame.sprite.Sprite):

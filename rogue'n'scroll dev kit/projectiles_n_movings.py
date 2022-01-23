@@ -83,19 +83,19 @@ class SunDrop(Projectile):
 class Plasma(Projectile):
     def __init__(self, pos, trajectory, vector, dmg, collides, *group):
         super().__init__('plasma', pos, (trajectory, 0), vector, dmg, collides, *group)
-        self.speed = 25 / FPS
-        self.timer = 1 * FPS
+        self.speed = 80 / FPS
+        self.timer = 0.35 * FPS
 
     def update(self, *args, **kwargs):
         super().update()
         self.cur_frame = (self.cur_frame + 12 / FPS)
         self.image = self.frames[round(self.cur_frame) % len(self.frames)]
-        if self.timer == 1 * FPS:
+        if self.timer == 0.35 * FPS:
             collisions = pygame.sprite.spritecollideany(self, self.collides[0],
                                                         collided=pygame.sprite.collide_circle_ratio(1.65))
             if collisions:
                 self.timer -= 1
-        elif 0 < self.timer < 1 * FPS:
+        elif 0 < self.timer < 0.35 * FPS:
             self.timer -= 1
         else:
             self.detonate()

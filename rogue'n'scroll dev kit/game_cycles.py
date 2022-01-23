@@ -1,6 +1,7 @@
 import os
 import sys
 import pygame
+from random import choice
 from math import hypot
 from data_funcs import load_image, load_level, build, cut_sheet
 from buildings import Tile, Platform, Rail, Portal, Background
@@ -17,7 +18,7 @@ screen = pygame.display.set_mode(FULL_SIZE)
 player = None
 
 
-def generate_level(level, player=False):
+def generate_level(level, player=False, en_stats=ENEMY_STATS):
     new_player, x, y = None, None, None
     if not player:
         player_xy = (15, 8)
@@ -34,7 +35,7 @@ def generate_level(level, player=False):
                 Portal((x, y), portal_group, all_sprites)
             elif level[y][x] == 'm':
                 Rail((x, y), rail_group, all_sprites)
-                Mortar((x, y), rail_group, new_player if not player else player,
+                Mortar((x, y), rail_group, new_player if not player else player, en_stats,
                        [player_group, floor_group], enemy_group, all_sprites)
     # floor_group.update(level)
     return new_player, x, y
@@ -70,6 +71,14 @@ class Player(pygame.sprite.Sprite):
 
     def check_pulse(self):
         return self.stat_bar.is_alive()
+
+    def apply_buff(self, buff):
+        if buff == 'temp_MP_boost':
+            self.stat_bar.increase_max(mana=0.2)
+        elif buff == 'temp_HP_boost':
+            self.stat_bar.increase_max(health=0.15)
+        elif buff == 'temp_DMG_boost':
+            self.weapon.increase_dmg(0.2)
 
     def update(self, *args):
         if not self.check_pulse():
@@ -134,14 +143,23 @@ class Player(pygame.sprite.Sprite):
         if on_platform:
             self.fall = FPS // 3
 
-    def go_left(self):
-        self.change_x = -self.speed
+    def go_left(self, shift=False):
+        if shift:
+            self.change_x = -self.speed * 1.8
+        else:
+            self.change_x = -self.speed
 
-    def go_right(self):
-        self.change_x = self.speed
+    def go_right(self, shift=False):
+        if shift:
+            self.change_x = self.speed * 1.8
+        else:
+            self.change_x = self.speed
 
-    def stop(self):
-        self.change_x = 0
+    def stop(self, orientation):
+        if orientation == 'right':
+            self.change_x = min(0, self.change_x)
+        if orientation == 'left':
+            self.change_x = max(0, self.change_x)
 
 
 class CosmoWeapon(pygame.sprite.Sprite):
@@ -158,6 +176,9 @@ class CosmoWeapon(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.cooldown = [0, 1 * FPS]
         self.angle = 0
+
+    def increase_dmg(self, bonus):
+        self.dmg *= 1 + bonus
 
     def update(self, angle):
         rot_image = pygame.transform.rotate(self.orig_image, angle)
@@ -216,10 +237,6 @@ def terminate():
 
 
 def bridge():
-    # screen = pygame.display.set_mode(FULL_SIZE)
-    bgd = pygame.surface.Surface(FULL_SIZE)
-    bgd.fill((0, 0, 0))
-    all_sprites.clear(screen, bgd)
     buttons_group = pygame.sprite.Group()
     Button(0, 'temp_HP_boost', buttons_group)
     Button(1, 'temp_MP_boost', buttons_group)
@@ -234,7 +251,9 @@ def bridge():
                 for button in buttons_group.sprites():
                     connection = button.clicked(event.pos)
                     if connection:
-                        return str(button)
+                        text = str(button)
+                        buttons_group.empty()
+                        return text
         buttons_group.draw(screen)
         pygame.display.flip()
 
@@ -273,24 +292,24 @@ def death_screen():
     terminate()
 
 
-def main(number=0):
+def run_level(buff=None, number=0, name='level1.txt'):
     global player
     if number:
         for sprite in all_sprites:
-            if isinstance(sprite, Player) or isinstance(sprite, CosmoWeapon):
+            if isinstance(sprite, Player) or isinstance(sprite, CosmoWeapon) or isinstance(sprite, StatBar):
                 pass
-            elif isinstance(sprite, StatBar):
-                stat_bar = sprite
             else:
                 sprite.kill()
     running = True
-    if number:
+    enemy_stats = {'HP': ENEMY_STATS['HP'] * (1.1 ** number), 'damage': ENEMY_STATS['damage'] * (1.15 ** number)}
+    if buff:
         player = player_group.sprites()[0]
         player.weapon = weapon_group.sprites()[0]
-        # player.stat_bar = stat_bar
-        _, level_x, level_y = generate_level(load_level('level1.txt'), player=player)
+        player.apply_buff(buff)
+        player.stat_bar.update()
+        _, level_x, level_y = generate_level(load_level(name), player=player, en_stats=enemy_stats)
     else:
-        player, level_x, level_y = generate_level(load_level('level1.txt'))
+        player, level_x, level_y = generate_level(load_level(name))
     Background('wall_background', all_sprites)
     FULL_SIZE = ((level_x + 1) * tile_width, (level_y + 1) * tile_height)
     view_size = (min((1920, FULL_SIZE[0])), min((1080, FULL_SIZE[1])))
@@ -309,14 +328,23 @@ def main(number=0):
                 if pressed[pygame.K_DOWN]:
                     player.dismount()
                 if pressed[pygame.K_RIGHT]:
-                    player.go_right()
-                if pressed[pygame.K_LEFT]:
-                    player.go_left()
-            if event.type == pygame.KEYUP:
+                    player.go_right(shift=event.mod & pygame.KMOD_SHIFT)
+                elif pressed[pygame.K_LEFT]:
+                    player.go_left(shift=event.mod & pygame.KMOD_SHIFT)
                 if event.key == pygame.K_RIGHT:
-                    player.stop()
+                    player.go_right(shift=event.mod & pygame.KMOD_SHIFT)
+                elif event.key == pygame.K_LEFT:
+                    player.go_left(shift=event.mod & pygame.KMOD_SHIFT)
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_RSHIFT or event.key == pygame.K_LSHIFT:
+                    if pygame.key.get_pressed()[pygame.K_RIGHT]:
+                        player.go_right()
+                    if pygame.key.get_pressed()[pygame.K_LEFT]:
+                        player.go_left()
+                if event.key == pygame.K_RIGHT:
+                    player.stop('right')
                 if event.key == pygame.K_LEFT:
-                    player.stop()
+                    player.stop('left')
             if event.type == pygame.MOUSEBUTTONUP:
                 a = event.pos[0] - player.weapon.rect.centerx
                 b = event.pos[1] - player.weapon.rect.centery
@@ -340,23 +368,25 @@ def main(number=0):
         all_sprites.draw(screen)
         pygame.display.flip()
         clock.tick(FPS)
+    pygame.quit()
     return 0, False
 
 
 if __name__ == '__main__':
     # start_screen()
-    boosts = []
+    num = 0
     game_is_on = True
     xp = 0
-    res = main()
+    res = run_level(name=choice(os.listdir('levels')))
     if res:
         xp += res[0]
     else:
         print(xp)
     while game_is_on:
-        boosts.append(bridge())
-        res = main(number=1)
-        if res:
+        num += 1
+        boost = bridge()
+        res = run_level(number=num, buff=boost, name=choice(os.listdir('levels')))
+        if res[1]:
             xp += res[0]
         else:
             print(xp)

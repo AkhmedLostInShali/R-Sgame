@@ -86,7 +86,7 @@ class Rail(pygame.sprite.Sprite):
         self.image = self.rail_frames[self.cur_frame]
         self.rect = self.image.get_rect()
         self.rect.x = pos[0] * tile_width
-        self.rect.y = pos[1] * tile_height - 5
+        self.rect.y = pos[1] * tile_height + 32
 
     def update(self):
         self.cur_frame = (self.cur_frame + 6 / FPS) % 7
