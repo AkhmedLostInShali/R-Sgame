@@ -58,3 +58,9 @@ class Button(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = FULL_SIZE[0] // 2 - (0.8 + (pos - 1)) * self.rect.width
         self.rect.y = FULL_SIZE[1] // 2 - 0.5 * self.rect.width
+
+    def __str__(self):
+        return self.name
+
+    def clicked(self, position):
+        return self.rect.collidepoint(position)

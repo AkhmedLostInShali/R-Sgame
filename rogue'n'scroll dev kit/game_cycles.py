@@ -230,6 +230,11 @@ def bridge():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 terminate()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                for button in buttons_group.sprites():
+                    connection = button.clicked(event.pos)
+                    if connection:
+                        return str(button)
         buttons_group.draw(screen)
         pygame.display.flip()
 
