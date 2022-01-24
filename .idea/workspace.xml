@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="77be2f52-3824-48b3-a1ab-083928811c14" name="Changes" comment="game is cycled now! At least... ~39%&#10;making boosts&#10;left boosts, new levels and 2 brand-new enemy&#10;backgrounds and animation for them...&#10;of course-permanent improves">
-      <change afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/levels/level2.txt" afterDir="false" />
+    <list default="true" id="77be2f52-3824-48b3-a1ab-083928811c14" name="Changes" comment="version 0.0.9">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_23_01_2022_0_35__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_23_01_2022_0_35__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/shelved.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/shelved.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/buildings.py" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/buildings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/rail.png" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/rail.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/rail.psd" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/rail.psd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/enemies.py" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/enemies.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/game_cycles.py" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/game_cycles.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/interface.py" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/interface.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/levels/level1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/levels/level1.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/projectiles_n_movings.py" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/projectiles_n_movings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/settings_n_variables.py" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/settings_n_variables.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,7 +24,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="dev" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -188,9 +184,9 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.game_cycles" />
-        <item itemvalue="Python.main (1)" />
-        <item itemvalue="Python.stage designer2" />
         <item itemvalue="Python.test" />
+        <item itemvalue="Python.stage designer2" />
+        <item itemvalue="Python.main (1)" />
         <item itemvalue="Python.main" />
       </list>
     </recent_temporary>
@@ -289,7 +285,14 @@
       <option name="project" value="LOCAL" />
       <updated>1642959090009</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="version 0.0.9">
+      <created>1642976549073</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1642976549073</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -297,19 +300,7 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="dev" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </State>
+            <State />
           </value>
         </entry>
       </map>
@@ -325,7 +316,8 @@
     <MESSAGE value="sooo, this is stable commit. ~32%" />
     <MESSAGE value="game is cycled now! At least... ~37%&#10;left boosts, new levels and 2 brand-new enemy&#10;backgrounds and animation for them...&#10;of course-permanent improves" />
     <MESSAGE value="game is cycled now! At least... ~39%&#10;making boosts&#10;left boosts, new levels and 2 brand-new enemy&#10;backgrounds and animation for them...&#10;of course-permanent improves" />
-    <option name="LAST_COMMIT_MESSAGE" value="game is cycled now! At least... ~39%&#10;making boosts&#10;left boosts, new levels and 2 brand-new enemy&#10;backgrounds and animation for them...&#10;of course-permanent improves" />
+    <MESSAGE value="version 0.0.9" />
+    <option name="LAST_COMMIT_MESSAGE" value="version 0.0.9" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -333,13 +325,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/rogue'n'scroll dev kit/game_cycles.py</url>
-          <line>270</line>
+          <line>286</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/rogue'n'scroll dev kit/enemies.py</url>
-          <line>74</line>
-          <option name="timeStamp" value="23" />
+          <url>file://$PROJECT_DIR$/rogue'n'scroll dev kit/interface.py</url>
+          <line>29</line>
+          <option name="timeStamp" value="25" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

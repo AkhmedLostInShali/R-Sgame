@@ -25,13 +25,20 @@ class StatBar(pygame.sprite.Sprite):
         pygame.draw.rect(self.image, (15, 0, 155), (2, 38, self.stats['MP'] * 160 / (STATS['MP'] * self.MP_buff), 21))
         self.image.blit(self.bar_image, (0, 0))
 
-    def change_health(self, value):
+    def change_health(self, value, xp_sigil=False):
+        xp = 0
+        if xp_sigil and self.stats['HP'] + value > STATS['HP'] * self.HP_buff:
+            xp = self.stats['HP'] + value - STATS['HP'] * self.HP_buff
         self.stats['HP'] = min(self.stats['HP'] + value, STATS['HP'] * self.HP_buff)
         self.update()
+        return xp
 
     def change_mana(self, value):
+        if self.stats['MP'] + value <= 0:
+            return False
         self.stats['MP'] = min(self.stats['MP'] + value, STATS['MP'] * self.MP_buff)
         self.update()
+        return True
         
     def is_alive(self):
         return self.stats['HP'] > 0

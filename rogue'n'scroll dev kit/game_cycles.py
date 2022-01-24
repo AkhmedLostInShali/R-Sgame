@@ -1,12 +1,12 @@
 import os
 import sys
 import pygame
-from random import choice
+from random import choice, sample
 from math import hypot
 from data_funcs import load_image, load_level, build, cut_sheet
 from buildings import Tile, Platform, Rail, Portal, Background
 from settings_n_variables import FPS, FULL_SIZE, WIDTH, HEIGHT, tile_width, tile_height, STATS, ENEMY_STATS
-from projectiles_n_movings import Projectile, Plasma, SunDrop
+from projectiles_n_movings import Projectile, Plasma, SunDrop, Orb
 from enemies import Enemy, Mortar
 from initialisation import enemy_group, player_group, projectile_group, all_sprites, portal_group, rail_group
 from initialisation import floor_group, weapon_group
@@ -57,17 +57,24 @@ class Player(pygame.sprite.Sprite):
         self.float_y = self.rect.y
         self.speed = 120 / FPS
         self.invincibility = 0
+        self.buffs = ['sigil_XP_boost']
         self.stat_bar = StatBar(all_sprites)
         self.weapon = CosmoWeapon()
 
     def add_values(self, value):
-        self.stat_bar.change_health(value[0])
+        xp = self.stat_bar.change_health(value[0], xp_sigil='sigil_XP_boost' in self.buffs)
+        if xp:
+            Orb((0, xp, 0), self.rect.center, portal_group.sprites()[0],
+                projectile_group, self.groups()[-1])
         self.stat_bar.change_mana(value[2])
 
     def take_damage(self, damage):
-        if not self.invincibility:
+        if not self.invincibility and damage > 0:
             self.stat_bar.change_health(-damage)
             self.invincibility = 1.25 * FPS
+
+    def take_mana(self, mana):
+        return self.stat_bar.change_mana(mana)
 
     def check_pulse(self):
         return self.stat_bar.is_alive()
@@ -79,6 +86,10 @@ class Player(pygame.sprite.Sprite):
             self.stat_bar.increase_max(health=0.15)
         elif buff == 'temp_DMG_boost':
             self.weapon.increase_dmg(0.2)
+        elif buff == 'sigil_MP_boost':
+            self.buffs.append(buff)
+        elif buff == 'sigil_XP_boost':
+            self.buffs.append(buff)
 
     def update(self, *args):
         if not self.check_pulse():
@@ -95,6 +106,9 @@ class Player(pygame.sprite.Sprite):
             elif self.change_x < 0:
                 self.rect.left = floor_hit[0].rect.right
                 self.float_x = self.rect.x
+        elif self.change_x > self.speed or self.change_x < -self.speed:
+            if not self.take_mana(-0.25):
+                self.change_x = self.speed * (1 if self.change_x > 0 else -1)
         self.float_y += self.change_y
         self.rect.y = round(self.float_y)
         block_hit = pygame.sprite.spritecollideany(self, floor_group)
@@ -113,6 +127,7 @@ class Player(pygame.sprite.Sprite):
                     self.float_y = self.rect.y
                     self.change_y = 0
         self.fall -= 1 if self.fall else 0
+        self.take_mana(0.03)
         self.weapon.rect.x = self.rect.x + 8
         self.weapon.rect.y = self.rect.y + 2
         self.invincibility = max(self.invincibility - 1, 0)
@@ -160,6 +175,8 @@ class Player(pygame.sprite.Sprite):
             self.change_x = min(0, self.change_x)
         if orientation == 'left':
             self.change_x = max(0, self.change_x)
+        if orientation == 'both':
+            self.change_x = 0
 
 
 class CosmoWeapon(pygame.sprite.Sprite):
@@ -238,9 +255,10 @@ def terminate():
 
 def bridge():
     buttons_group = pygame.sprite.Group()
-    Button(0, 'temp_HP_boost', buttons_group)
-    Button(1, 'temp_MP_boost', buttons_group)
-    Button(2, 'temp_DMG_boost', buttons_group)
+    all_buttons = os.listdir('data/tips')
+    buttons = sample(all_buttons, k=3)
+    for i in range(3):
+        Button(i, buttons[i][:-4], buttons_group)
     running = True
     while running:
         screen.fill((0, 0, 0))
@@ -362,6 +380,7 @@ def run_level(buff=None, number=0, name='level1.txt'):
         if not enemy_group.sprites() and portal.rect.collidepoint(player.rect.center):
             portal.activate()
         if portal.update() == 'teleport':
+            player.stop('both')
             return portal.xp,  True
         for sprite in all_sprites:
             camera.apply(sprite)
