@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="77be2f52-3824-48b3-a1ab-083928811c14" name="Changes" comment="version 0.0.9">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_23_01_2022_0_35__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_23_01_2022_0_35__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/shelved.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/shelved.xml" afterDir="false" />
+    <list default="true" id="77be2f52-3824-48b3-a1ab-083928811c14" name="Changes" comment="added 2 new buff(sigil system) image and 1 new buff&#10;included mana in game economics. ~47%&#10;left 1 sigil image and 2 sigil buffs, potions, music, ~2 enemies(+1 projectile) and some breakables">
+      <change afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/soundtrack_1.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/soundtrack_2.mp3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data_funcs.py" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data_funcs.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/game_cycles.py" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/game_cycles.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/interface.py" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/interface.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/settings_n_variables.py" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/settings_n_variables.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/levels/level1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/levels/level1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/levels/level2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/levels/level2.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -181,6 +182,13 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Python.game_cycles" />
+      <item itemvalue="Python.main" />
+      <item itemvalue="Python.main (1)" />
+      <item itemvalue="Python.stage designer2" />
+      <item itemvalue="Python.test" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.game_cycles" />
@@ -292,7 +300,14 @@
       <option name="project" value="LOCAL" />
       <updated>1642976549073</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="added 2 new buff(sigil system) image and 1 new buff&#10;included mana in game economics. ~47%&#10;left 1 sigil image and 2 sigil buffs, potions, music, ~2 enemies(+1 projectile) and some breakables">
+      <created>1643057148431</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1643057148431</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -317,7 +332,8 @@
     <MESSAGE value="game is cycled now! At least... ~37%&#10;left boosts, new levels and 2 brand-new enemy&#10;backgrounds and animation for them...&#10;of course-permanent improves" />
     <MESSAGE value="game is cycled now! At least... ~39%&#10;making boosts&#10;left boosts, new levels and 2 brand-new enemy&#10;backgrounds and animation for them...&#10;of course-permanent improves" />
     <MESSAGE value="version 0.0.9" />
-    <option name="LAST_COMMIT_MESSAGE" value="version 0.0.9" />
+    <MESSAGE value="added 2 new buff(sigil system) image and 1 new buff&#10;included mana in game economics. ~47%&#10;left 1 sigil image and 2 sigil buffs, potions, music, ~2 enemies(+1 projectile) and some breakables" />
+    <option name="LAST_COMMIT_MESSAGE" value="added 2 new buff(sigil system) image and 1 new buff&#10;included mana in game economics. ~47%&#10;left 1 sigil image and 2 sigil buffs, potions, music, ~2 enemies(+1 projectile) and some breakables" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -325,13 +341,23 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/rogue'n'scroll dev kit/game_cycles.py</url>
-          <line>286</line>
+          <line>289</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/rogue'n'scroll dev kit/interface.py</url>
           <line>29</line>
           <option name="timeStamp" value="25" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/rogue'n'scroll dev kit/game_cycles.py</url>
+          <line>39</line>
+          <option name="timeStamp" value="27" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/rogue'n'scroll dev kit/game_cycles.py</url>
+          <line>333</line>
+          <option name="timeStamp" value="28" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

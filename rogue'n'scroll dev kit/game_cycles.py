@@ -23,7 +23,7 @@ def generate_level(level, player=False, en_stats=ENEMY_STATS):
     if not player:
         player_xy = (15, 8)
         new_player = Player(*player_xy)
-    for y in range(len(level)):
+    for y in range(len(level) - 2):
         for x in range(len(level[y])):
             if level[y][x] == '1':
                 Tile((x, y), build(level, x, y), floor_group, all_sprites)
@@ -37,8 +37,9 @@ def generate_level(level, player=False, en_stats=ENEMY_STATS):
                 Rail((x, y), rail_group, all_sprites)
                 Mortar((x, y), rail_group, new_player if not player else player, en_stats,
                        [player_group, floor_group], enemy_group, all_sprites)
+    back, sound = level[-1]
     # floor_group.update(level)
-    return new_player, x, y
+    return new_player, x, y, back, sound
 
 
 class Player(pygame.sprite.Sprite):
@@ -325,10 +326,12 @@ def run_level(buff=None, number=0, name='level1.txt'):
         player.weapon = weapon_group.sprites()[0]
         player.apply_buff(buff)
         player.stat_bar.update()
-        _, level_x, level_y = generate_level(load_level(name), player=player, en_stats=enemy_stats)
+        _, level_x, level_y, bg, st = generate_level(load_level(name), player=player, en_stats=enemy_stats)
     else:
-        player, level_x, level_y = generate_level(load_level(name))
-    Background('wall_background', all_sprites)
+        player, level_x, level_y, bg, st = generate_level(load_level(name))
+    Background(bg, all_sprites)
+    soundtrack = pygame.mixer.music.load('data/' + st)
+    pygame.mixer.music.play(soundtrack)
     FULL_SIZE = ((level_x + 1) * tile_width, (level_y + 1) * tile_height)
     view_size = (min((1920, FULL_SIZE[0])), min((1080, FULL_SIZE[1])))
     # screen = pygame.display.set_mode(FULL_SIZE)
