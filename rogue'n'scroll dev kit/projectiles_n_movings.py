@@ -19,7 +19,7 @@ class Projectile(pygame.sprite.Sprite):
         self.image = self.frames[self.cur_frame]
         self.rect = self.image.get_rect()
         self.rect.centerx, self.rect.centery = pos
-        # rot_image = pygame.transform.rotate(self.image, trajectory[1])
+        # rot_image = pygame.transform.rotate(self.image, trajectory[1]) !!!this part can be used in future!!!
         # rot_rect = self.rect.copy()
         # rot_rect.center = rot_image.get_rect().center
         # self.image = rot_image.subsurface(rot_rect).copy()

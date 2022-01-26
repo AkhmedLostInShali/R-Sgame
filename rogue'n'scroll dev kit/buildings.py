@@ -25,10 +25,6 @@ class Tile(pygame.sprite.Sprite):
     def take_damage(self, *args):
         pass
 
-    # def update(self, level):
-    #     x, y = self.rect.x // tile_width, self.rect.y // tile_height
-    #     self.image = build(level, x, y)
-
 
 class Platform(Tile):
     platform_image = load_image('platforms')
@@ -48,6 +44,7 @@ class Portal(pygame.sprite.Sprite):
         self.static = False
         self.charged = False
         self.xp = 0
+        self.coefficient = 1
         self.cur_frames = 0
         self.image = self.uncharged_frames[0]
         self.rect = self.image.get_rect()
@@ -57,10 +54,12 @@ class Portal(pygame.sprite.Sprite):
     def activate(self):
         if round(self.cur_frames) == 0:
             self.charged = True
-        # self.cur_frames = 0
+
+    def add_level(self):
+        self.coefficient += 0.05
 
     def add_values(self, value):
-        self.xp += value[1]
+        self.xp += value[1] * self.coefficient
 
     def update(self):
         self.cur_frames = (self.cur_frames + 6 / FPS) % 18
@@ -70,9 +69,6 @@ class Portal(pygame.sprite.Sprite):
                 return 'teleport'
         else:
             self.image = self.uncharged_frames[round(self.cur_frames // 1)]
-
-    def teleport(self):
-        pass
 
 
 class Rail(pygame.sprite.Sprite):

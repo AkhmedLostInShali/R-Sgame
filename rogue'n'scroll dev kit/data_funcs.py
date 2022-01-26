@@ -1,9 +1,22 @@
 import pygame
 import os
 import sys
+import json
 pygame.init()
 FULL_SIZE = WIDTH, HEIGHT = 1920, 1080
 pre_screen = pygame.display.set_mode(FULL_SIZE)
+
+
+def load_xp():
+    with open('xp.json') as xp_file:
+        xp = json.load(xp_file)['xp']
+    return xp
+
+
+def dump_add_xp(value):
+    xp_data = {'xp': load_xp() + round(value)}
+    with open('xp.json', 'w') as xp_file:
+        json.dump(xp_data, xp_file)
 
 
 def load_image(name, colorkey=None):

@@ -14,6 +14,7 @@ class Enemy(pygame.sprite.Sprite):
         super().__init__(*group)
         self.static = 'float'
         group[-1].change_layer(self, 3)
+        self.name = 'enemy'
         self.hp = self.max_hp = stats['HP']
         self.bar = None
         self.dmg = stats['damage']
@@ -37,10 +38,10 @@ class Enemy(pygame.sprite.Sprite):
             self.hp -= (damage - self.defence)
             self.invincibility = 0.75 * FPS
         if not self.bar:
-            self.bar = EnemyHealthBar(self.hp, self.max_hp, self.groups()[-1])
+            self.bar = EnemyHealthBar(self.name, self.hp, self.max_hp, self.groups()[-1])
         else:
             self.bar.kill()
-            self.bar = EnemyHealthBar(self.hp, self.max_hp, self.groups()[-1])
+            self.bar = EnemyHealthBar(self.name, self.hp, self.max_hp, self.groups()[-1])
         if self.hp <= 0:
             self.death()
 
@@ -57,6 +58,7 @@ class Enemy(pygame.sprite.Sprite):
 class Mortar(Enemy):
     def __init__(self, pos, rails, target, stats, hits, *group, orientation='bottom'):
         super().__init__("mortar_" + orientation, 5, pos, target, stats, hits, *group)
+        self.name = 'Mortar'
         self.rails = rails
         self.dmg *= 1.8
         self.cur_frame = 2
@@ -104,6 +106,7 @@ class Mortar(Enemy):
 class Defender(Enemy):
     def __init__(self, pos, stats, hits, *group):
         super().__init__("defender", 8, pos, None, stats, hits, *group)
+        self.name = 'Defender'
         self.dmg *= 0.25
         self.max_hp *= 0.5
         self.hp = self.max_hp

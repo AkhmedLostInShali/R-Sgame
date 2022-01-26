@@ -6,13 +6,14 @@ from random import choice, sample
 import pygame
 
 from buildings import Tile, Platform, Rail, Portal, Background
-from data_funcs import load_image, load_level, build
+from data_funcs import load_image, load_level, build, dump_add_xp, load_xp
 from enemies import Mortar, Defender
 from initialisation import enemy_group, player_group, projectile_group, all_sprites, portal_group, rail_group
 from initialisation import floor_group, weapon_group
 from interface import StatBar, Button
 from projectiles_n_movings import SunDrop, Orb
-from settings_n_variables import FPS, FULL_SIZE, WIDTH, HEIGHT, tile_width, tile_height, STATS, ENEMY_STATS
+from settings_n_variables import FPS, FULL_SIZE, tile_width, tile_height, STATS, ENEMY_STATS, lvl
+from settings_n_variables import buff_texts
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -20,9 +21,9 @@ screen = pygame.display.set_mode(FULL_SIZE)
 player = None
 
 
-def generate_level(level, player=False, en_stats=ENEMY_STATS):
+def generate_level(level, person=False, en_stats=ENEMY_STATS):
     new_player, x, y = None, None, None
-    if not player:
+    if not person:
         player_xy = (15, 8)
         new_player = Player(*player_xy)
     back, sound = level[-1]
@@ -43,7 +44,6 @@ def generate_level(level, player=False, en_stats=ENEMY_STATS):
                        [player_group, floor_group], enemy_group, all_sprites)
             elif level[y][x] == 'd':
                 Defender((x, y), en_stats, [enemy_group], enemy_group, all_sprites)
-    # floor_group.update(level)
     return new_player, x, y, back, sound
 
 
@@ -70,9 +70,9 @@ class Player(pygame.sprite.Sprite):
         self.weapon = CosmoWeapon()
 
     def add_values(self, value):
-        xp = self.stat_bar.change_health(value[0], xp_sigil='sigil_XP_boost' in self.buffs)
-        if xp:
-            Orb((0, xp, 0), self.rect.center, portal_group.sprites()[0],
+        experience = self.stat_bar.change_health(value[0], xp_sigil='sigil_XP_boost' in self.buffs)
+        if experience:
+            Orb((0, experience, 0), self.rect.center, portal_group.sprites()[0],
                 projectile_group, self.groups()[-1])
         self.stat_bar.change_mana(value[2])
 
@@ -82,8 +82,8 @@ class Player(pygame.sprite.Sprite):
             self.invincibility = 1.25 * FPS
 
     def take_mana(self, mana):
-        res = self.stat_bar.change_mana(mana)
-        if res and mana < 0 and 'sigil_MP_boost' in self.buffs:
+        result = self.stat_bar.change_mana(mana)
+        if result and mana < 0 and 'sigil_MP_boost' in self.buffs:
             self.MP_used += -mana
         return self.stat_bar.change_mana(mana)
 
@@ -102,6 +102,8 @@ class Player(pygame.sprite.Sprite):
             self.MP_regen += 2 / FPS
         elif buff == 'sigil_XP_boost':
             self.buffs.append(buff)
+        if 'sigil_XP_boost' in self.buffs:
+            return self.stat_bar.get_value(key='MP', cur=True)
 
     def update(self, *args):
         if not self.check_pulse():
@@ -150,9 +152,6 @@ class Player(pygame.sprite.Sprite):
         else:
             self.change_y += 9.8 / FPS
             self.change_y = 280 / FPS if self.change_y > 280 / FPS else self.change_y
-        # if self.rect.y >= FULL_SIZE[1] - self.rect.height and and self.change_y >= 0:
-        #     self.change_y = 0
-        #     self.rect.y = FULL_SIZE[1] - self.rect.height
 
     def jump(self):
         self.rect.y += 1
@@ -229,7 +228,6 @@ class CosmoWeapon(pygame.sprite.Sprite):
 
 
 class Camera:
-    # зададим начальный сдвиг камеры
     def __init__(self, full, view):
         self.dx = 0
         self.full_size = full
@@ -237,7 +235,6 @@ class Camera:
         self.total_shift = [0, 0]
         self.dy = 0
 
-    # сдвинуть объект obj на смещение камеры
     def apply(self, obj):
         if obj.static and obj.static != 'float':
             return
@@ -291,42 +288,45 @@ def bridge(number):
                         text = str(button)
                         buttons_group.empty()
                         return text
+        for button in buttons_group.sprites():
+            connection = button.clicked(pygame.mouse.get_pos())
+            if connection:
+                text = buff_texts[str(button)]
+                font = pygame.font.Font(None, 100)
+                heading = font.render(text[0], True, (232, 174, 70))
+                screen.blit(heading, (FULL_SIZE[0] // 2 - heading.get_width() // 2, 200))
+                font = pygame.font.Font(None, 50)
+                for i, line in enumerate(text[1]):
+                    string = font.render(line, True, (232, 174, 70))
+                    screen.blit(string, (FULL_SIZE[0] // 2 - string.get_width() // 2, 750 + i * 50))
         buttons_group.draw(screen)
         pygame.display.flip()
+        clock.tick(FPS)
 
 
-def start_screen():
-    intro_text = ["ЗАСТАВКА", "",
-                  "Правила игры",
-                  "Если в правилах несколько строк,",
-                  "приходится выводить их построчно"]
-
-    fon = pygame.transform.scale(load_image('fon.jpg'), (WIDTH, HEIGHT))
-    screen.blit(fon, (0, 0))
-    font = pygame.font.Font(None, 30)
+def death_screen(experience):
+    running = True
+    screen.fill((17, 30, 49))
+    text = ['GAME OVER',
+            f"At this run you've earn {round(experience)} xp.",
+            f"Your total xp: {load_xp() + round(experience)}, lvl: {lvl}"]
+    font = pygame.font.Font(None, 150)
     text_coord = 50
-    for line in intro_text:
-        string_rendered = font.render(line, True, pygame.Color('white'))
+    for line in text:
+        string_rendered = font.render(line, True, pygame.Color((232, 174, 70)))
         intro_rect = string_rendered.get_rect()
         text_coord += 10
         intro_rect.top = text_coord
         intro_rect.x = 10
         text_coord += intro_rect.height
         screen.blit(string_rendered, intro_rect)
-
-    while True:
+    while running:
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+            if event.type in [pygame.QUIT, pygame.MOUSEBUTTONDOWN]:
+                dump_add_xp(experience)
                 terminate()
-            elif event.type == pygame.KEYDOWN or \
-                    event.type == pygame.MOUSEBUTTONDOWN:
-                return  # начинаем игру
         pygame.display.flip()
         clock.tick(FPS)
-
-
-def death_screen():
-    terminate()
 
 
 def run_level(buff=None, number=0, name='level1.txt'):
@@ -342,22 +342,24 @@ def run_level(buff=None, number=0, name='level1.txt'):
     if buff:
         player = player_group.sprites()[0]
         player.weapon = weapon_group.sprites()[0]
-        player.apply_buff(buff)
+        xp_sigil = player.apply_buff(buff)
         player.stat_bar.update()
-        _, level_x, level_y, bg, st = generate_level(load_level(name), player=player, en_stats=enemy_stats)
+        _, level_x, level_y, bg, st = generate_level(load_level(name), person=player, en_stats=enemy_stats)
     else:
+        xp_sigil = None
         player, level_x, level_y, bg, st = generate_level(load_level(name))
     Background(bg, all_sprites)
     pygame.mixer.init(44100)
-    backtrack = pygame.mixer.Channel(1)
     soundtrack = pygame.mixer.Sound('data/' + st)
     soundtrack.play(loops=-1)
     soundtrack.set_volume(0.1)
-    FULL_SIZE = ((level_x + 1) * tile_width, (level_y + 1) * tile_height)
-    view_size = (min((1920, FULL_SIZE[0])), min((1080, FULL_SIZE[1])))
-    # screen = pygame.display.set_mode(FULL_SIZE)
-    camera = Camera(FULL_SIZE, view_size)
+    full_size = ((level_x + 1) * tile_width, (level_y + 1) * tile_height)
+    view_size = (min((1920, full_size[0])), min((1080, full_size[1])))
+    camera = Camera(full_size, view_size)
     portal = portal_group.sprites()[0]
+    portal.add_level()
+    if xp_sigil:
+        Orb((0, xp_sigil, 0), player.rect.center, portal, projectile_group, all_sprites)
     while running:
         screen.fill((0, 0, 0))
         for event in pygame.event.get():
@@ -413,25 +415,21 @@ def run_level(buff=None, number=0, name='level1.txt'):
         all_sprites.draw(screen)
         pygame.display.flip()
         clock.tick(FPS)
-    # soundtrack.fadeout(2500)
-    # return portal.xp, 'end'
 
 
 if __name__ == '__main__':
-    # start_screen()
     num = 0
     xp = 0
     res = run_level(name=choice(os.listdir('levels')))
     game_is_on = res[1]
     if game_is_on:
         xp += res[0]
-        print(xp)
     while game_is_on == 'next':
         num += 1
         boost = bridge(num)
         res = run_level(number=num, buff=boost, name=choice(os.listdir('levels')))
         game_is_on = res[1]
         xp += res[0]
-        print(xp)
     if game_is_on == 'death':
-        death_screen()
+        death_screen(xp)
+    dump_add_xp(xp)

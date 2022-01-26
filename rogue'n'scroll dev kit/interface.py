@@ -14,16 +14,28 @@ class StatBar(pygame.sprite.Sprite):
         self.image = self.back_image.copy()
         self.stats = STATS.copy()
         self.HP_buff, self.MP_buff = 1, 1
-        pygame.draw.rect(self.image, (155, 0, 15), (2, 3, 200, 28))
-        pygame.draw.rect(self.image, (15, 0, 155), (2, 38, 160, 21))
-        self.image.blit(self.bar_image, (0, 0))
         self.rect = self.image.get_rect()
+        self.update()
 
     def update(self):
         self.image = self.back_image.copy()
         pygame.draw.rect(self.image, (155, 0, 15), (2, 3, self.stats['HP'] * 200 / (STATS['HP'] * self.HP_buff), 28))
         pygame.draw.rect(self.image, (15, 0, 155), (2, 38, self.stats['MP'] * 160 / (STATS['MP'] * self.MP_buff), 21))
         self.image.blit(self.bar_image, (0, 0))
+        font = pygame.font.Font(None, 38)
+        health_text = font.render(f'{round(self.stats["HP"])}', True,
+                                  pygame.Color((215, 230, 255)))
+        self.image.blit(health_text, (4, 6))
+        font = pygame.font.Font(None, 28)
+        mana_text = font.render(f'{round(self.stats["MP"])}', True,
+                                pygame.Color((255, 190, 215)))
+        self.image.blit(mana_text, (4, 39))
+
+    def get_value(self, key='MP', cur=False):
+        if cur:
+            return self.stats[key]
+        else:
+            return STATS[key] * (self.MP_buff if key == 'MP' else self.HP_buff)
 
     def change_health(self, value, xp_sigil=False):
         xp = 0
@@ -49,7 +61,7 @@ class StatBar(pygame.sprite.Sprite):
 
 
 class EnemyHealthBar(pygame.sprite.Sprite):
-    def __init__(self, cur_hp, max_hp, *group):
+    def __init__(self, name, cur_hp, max_hp, *group):
         super().__init__(*group)
         self.static = True
         group[-1].change_layer(self, 6)
@@ -59,6 +71,10 @@ class EnemyHealthBar(pygame.sprite.Sprite):
         self.rect.x, self.rect.y = FULL_SIZE[0] // 2 - self.rect.width // 2, 15
         pygame.draw.rect(self.image, (25, 25, 25), (0, 0, self.rect.width, 15))
         pygame.draw.rect(self.image, (155, 0, 15), (0, 0, length, 15))
+        font = pygame.font.Font(None, 24)
+        name_text = font.render(f'{name} {round(cur_hp)} / {round(max_hp)}', True,
+                                pygame.Color((237, 178, 72)))
+        self.image.blit(name_text, (self.rect.width // 2 - (name_text.get_width() // 2), 0))
 
 
 class Button(pygame.sprite.Sprite):

@@ -1,35 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cc3b6750-a887-4f59-a96d-62a63d8d41d6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/R&amp;SProject.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/soundtrack_1.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/soundtrack_2.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/whiff.wav" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_15_01_2022_22_06_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_15_01_2022_22_06_[Changes]1/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_23_01_2022_0_35_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_23_01_2022_0_35_[Changes]1/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_23_01_2022_0_35__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/shelved.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/shelved/shelved.patch" beforeDir="false" />
+    <list default="true" id="07577d99-2051-4d6d-bf6c-cf91923818a0" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/xp.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/R&amp;SProject.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/R&amp;SProject.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_26_01_2022_18_16_[Changes]/shelved.patch" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/soundtrack_1.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data/soundtrack_2.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/buildings.py" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/buildings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data_funcs.py" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data_funcs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/demo.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/enemies.py" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/enemies.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/game_cycles.py" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/game_cycles.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/initialisation.py" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/initialisation.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/interface.py" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/interface.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/levels/level1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/levels/level1.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/levels/level2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/levels/level2.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/projectiles_n_movings.py" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/projectiles_n_movings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/settings_n_variables.py" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/settings_n_variables.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/test.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -37,7 +36,7 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectId" id="24CxJkjoNI6GIY8cCvSon5JXs52" />
+  <component name="ProjectId" id="24EzNZxA6MZnRdk96aNykVHlePj" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -45,16 +44,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/rogue'n'scroll dev kit/data" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
-  </component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\GAME STORE\PycharmProjects\R&amp;SProject\rogue'n'scroll dev kit\data" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\GAME STORE\PycharmProjects\R&amp;SProject\rogue'n'scroll dev kit" />
-    </key>
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/яндекс/pygameproject/mario" />
   </component>
   <component name="RunManager" selected="Python.game_cycles">
     <configuration name="game_cycles" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
@@ -78,7 +68,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="sound" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="json_writer" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="R&amp;SProject" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -86,11 +76,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/rogue'n'scroll dev kit" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/sound.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/rogue'n'scroll dev kit/json_writer.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -99,25 +89,21 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <list>
-      <item itemvalue="Python.game_cycles" />
-      <item itemvalue="Python.sound" />
-    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.game_cycles" />
-        <item itemvalue="Python.sound" />
+        <item itemvalue="Python.json_writer" />
       </list>
     </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="cc3b6750-a887-4f59-a96d-62a63d8d41d6" name="Changes" comment="" />
-      <created>1643148301159</created>
+      <changelist id="07577d99-2051-4d6d-bf6c-cf91923818a0" name="Changes" comment="" />
+      <created>1643210496286</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1643148301159</updated>
+      <updated>1643210496286</updated>
     </task>
     <servers />
   </component>
@@ -136,19 +122,19 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/sound.py</url>
-          <line>26</line>
+          <url>file://$PROJECT_DIR$/rogue'n'scroll dev kit/game_cycles.py</url>
+          <line>434</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/rogue'n'scroll dev kit/enemies.py</url>
-          <line>36</line>
-          <option name="timeStamp" value="3" />
+          <url>file://$PROJECT_DIR$/rogue'n'scroll dev kit/data_funcs.py</url>
+          <line>17</line>
+          <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/rogue'n'scroll dev kit/enemies.py</url>
-          <line>32</line>
-          <option name="timeStamp" value="9" />
+          <url>file://$PROJECT_DIR$/rogue'n'scroll dev kit/settings_n_variables.py</url>
+          <line>6</line>
+          <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
