@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="77be2f52-3824-48b3-a1ab-083928811c14" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase_[Changes]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase_[Changes]1/shelved.patch" afterDir="false" />
+    <list default="true" id="07577d99-2051-4d6d-bf6c-cf91923818a0" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/xp.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/R&amp;SProject.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/R&amp;SProject.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_26_01_2022_18_16_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/buildings.py" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/buildings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/data_funcs.py" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/data_funcs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/demo.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/enemies.py" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/enemies.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/game_cycles.py" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/game_cycles.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/initialisation.py" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/initialisation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/interface.py" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/interface.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/levels/level1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/levels/level1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/projectiles_n_movings.py" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/projectiles_n_movings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/settings_n_variables.py" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll dev kit/settings_n_variables.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rogue'n'scroll dev kit/test.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,18 +31,12 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="dev" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectId" id="23BuLUBE9mMq0X8XPg3Str9BuCm" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectId" id="24EzNZxA6MZnRdk96aNykVHlePj" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -37,84 +44,10 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-  </component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\GAME STORE\PycharmProjects\R&amp;SProject\rogue'n'scroll dev kit" />
-      <recent name="C:\Users\GAME STORE\PycharmProjects\R&amp;SProject\rogue'n'scroll dev kit\data" />
-      <recent name="C:\Users\GAME STORE\PycharmProjects\R&amp;SProject" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\GAME STORE\PycharmProjects\R&amp;SProject\rogue'n'scroll dev kit" />
-      <recent name="C:\Users\GAME STORE\PycharmProjects\R&amp;SProject\rogue'n'scroll dev kit\levels" />
-    </key>
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/яндекс/pygameproject/mario" />
   </component>
   <component name="RunManager" selected="Python.game_cycles">
     <configuration name="game_cycles" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="C:\Users\GAME STORE\PycharmProjects\R&amp;SProject\venv\Scripts\python.exe" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/rogue'n'scroll dev kit" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/rogue'n'scroll dev kit/game_cycles.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="game_cycles" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="C:\Users\GAME STORE\PycharmProjects\R&amp;SProject\venv\Scripts\python.exe" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/rogue'n'scroll dev kit" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/rogue'n'scroll dev kit/game_cycles.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="main (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="C:\Users\GAME STORE\PycharmProjects\R&amp;SProject\venv\Scripts\python.exe" />
-      <option name="WORKING_DIRECTORY" value="$USER_HOME$/Downloads/Metal-Clicker.-The-best-Game-in-the-world-AAA-level-master/Metal-Clicker.-The-best-Game-in-the-world-AAA-level-master" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="" />
-      <option name="SCRIPT_NAME" value="$USER_HOME$/Downloads/Metal-Clicker.-The-best-Game-in-the-world-AAA-level-master/Metal-Clicker.-The-best-Game-in-the-world-AAA-level-master/main.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="R&amp;SProject" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -126,7 +59,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/rogue'n'scroll dev kit/main.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/rogue'n'scroll dev kit/game_cycles.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -135,28 +68,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="stage designer2" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="C:\Users\GAME STORE\PycharmProjects\R&amp;SProject\venv\Scripts\python.exe" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/rogue'n'scroll dev kit" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/rogue'n'scroll dev kit/stage designer2.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="json_writer" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="R&amp;SProject" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -168,7 +80,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/rogue'n'scroll dev kit/test.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/rogue'n'scroll dev kit/json_writer.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -180,108 +92,19 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.game_cycles" />
-        <item itemvalue="Python.main (1)" />
-        <item itemvalue="Python.stage designer2" />
-        <item itemvalue="Python.test" />
-        <item itemvalue="Python.main" />
+        <item itemvalue="Python.json_writer" />
       </list>
     </recent_temporary>
   </component>
-  <component name="ShelveChangesManager" show_recycled="true" />
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="77be2f52-3824-48b3-a1ab-083928811c14" name="Changes" comment="sooo, this is stable commit. ~32%" />
-      <created>1641219744866</created>
+      <changelist id="07577d99-2051-4d6d-bf6c-cf91923818a0" name="Changes" comment="" />
+      <created>1643210496286</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1641219744866</updated>
+      <updated>1643210496286</updated>
     </task>
-    <task id="LOCAL-00001" summary="first stable commit. ~15%">
-      <created>1641239971295</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1641239971295</updated>
-    </task>
-    <task id="LOCAL-00002" summary="creating Enemy class and his first subclass Mortar(only movement yet). ~20%">
-      <created>1641680873571</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1641680873571</updated>
-    </task>
-    <task id="LOCAL-00003" summary="created Mortar's behavior and Plasm projectile. ~23%&#10;started to create StatBar and stats(health, mana, damage, XP)">
-      <created>1641751761480</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1641751761480</updated>
-    </task>
-    <task id="LOCAL-00004" summary="making StatBar and stats(health, mana, damage, XP). ~25%&#10;layering sprites for correct draw">
-      <created>1642009779098</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1642009779098</updated>
-    </task>
-    <task id="LOCAL-00005" summary="making StatBar and stats(health, mana, damage, XP). ~26%&#10;fixed some platform bugs">
-      <created>1642012451210</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1642012451210</updated>
-    </task>
-    <task id="LOCAL-00006" summary="making StatBar and stats(health, mana, damage, XP). ~26%&#10;fixed some platform bugs">
-      <created>1642273467704</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1642273467704</updated>
-    </task>
-    <task id="LOCAL-00007" summary="making StatBar and stats(health, mana, damage, XP). ~26%&#10;fixed some platform bugs">
-      <created>1642274135398</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1642274135398</updated>
-    </task>
-    <task id="LOCAL-00008" summary="making StatBar and stats(health, mana, damage, XP). ~26%&#10;fixed some platform bugs">
-      <created>1642274611175</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1642274611175</updated>
-    </task>
-    <task id="LOCAL-00009" summary="wow, i found my lost sprites!&#10;epic comeback">
-      <created>1642529287245</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1642529287245</updated>
-    </task>
-    <task id="LOCAL-00010" summary="sooo, this is stable commit. ~32%">
-      <created>1642531085641</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1642531085641</updated>
-    </task>
-    <task id="LOCAL-00011" summary="game is cycled now! At least... ~37%&#10;left boosts, new levels and 2 brand-new enemy&#10;backgrounds and animation for them...&#10;of course-permanent improves">
-      <created>1642804301727</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1642804301727</updated>
-    </task>
-    <task id="LOCAL-00012" summary="game is cycled now! At least... ~39%&#10;making boosts&#10;left boosts, new levels and 2 brand-new enemy&#10;backgrounds and animation for them...&#10;of course-permanent improves">
-      <created>1642959090009</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1642959090009</updated>
-    </task>
-    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -289,58 +112,31 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="dev" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="first stable commit. ~15%" />
-    <MESSAGE value="creating Enemy class and his first subclass Mortar(only movement yet). ~20%" />
-    <MESSAGE value="created Mortar's behavior and Plasm projectile. ~23%&#10;started to create StatBar and stats(health, mana, damage, XP)" />
-    <MESSAGE value="making StatBar and stats(health, mana, damage, XP). ~25%&#10;layering sprites for correct draw" />
-    <MESSAGE value="making StatBar and stats(health, mana, damage, XP). ~26%&#10;fixed some platform bugs" />
-    <MESSAGE value="wow, i found my lost sprites!&#10;epic comeback" />
-    <MESSAGE value="sooo, this is stable commit. ~32%" />
-    <MESSAGE value="game is cycled now! At least... ~37%&#10;left boosts, new levels and 2 brand-new enemy&#10;backgrounds and animation for them...&#10;of course-permanent improves" />
-    <MESSAGE value="game is cycled now! At least... ~39%&#10;making boosts&#10;left boosts, new levels and 2 brand-new enemy&#10;backgrounds and animation for them...&#10;of course-permanent improves" />
-    <option name="LAST_COMMIT_MESSAGE" value="game is cycled now! At least... ~39%&#10;making boosts&#10;left boosts, new levels and 2 brand-new enemy&#10;backgrounds and animation for them...&#10;of course-permanent improves" />
-    <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/rogue'n'scroll dev kit/game_cycles.py</url>
-          <line>270</line>
-          <option name="timeStamp" value="10" />
+          <line>434</line>
+          <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/rogue'n'scroll dev kit/enemies.py</url>
-          <line>74</line>
-          <option name="timeStamp" value="23" />
+          <url>file://$PROJECT_DIR$/rogue'n'scroll dev kit/data_funcs.py</url>
+          <line>17</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/rogue'n'scroll dev kit/settings_n_variables.py</url>
+          <line>6</line>
+          <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
-      <default-breakpoints>
-        <breakpoint type="python-exception">
-          <properties notifyOnTerminate="true" exception="BaseException">
-            <option name="notifyOnTerminate" value="true" />
-          </properties>
-        </breakpoint>
-      </default-breakpoints>
     </breakpoint-manager>
   </component>
 </project>

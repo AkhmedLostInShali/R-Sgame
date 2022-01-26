@@ -1,11 +1,12 @@
-import pygame
 from random import randrange
+
+import pygame
+
 from data_funcs import load_image, cut_sheet
-from settings_n_variables import FPS, tile_width, tile_height
 from initialisation import projectile_group, portal_group, player_group
-from buildings import Rail
 from interface import EnemyHealthBar
-from projectiles_n_movings import Projectile, Plasma, SunDrop, Orb
+from projectiles_n_movings import Plasma, Orb, Defence
+from settings_n_variables import FPS, tile_width, tile_height
 
 
 class Enemy(pygame.sprite.Sprite):
@@ -13,9 +14,11 @@ class Enemy(pygame.sprite.Sprite):
         super().__init__(*group)
         self.static = 'float'
         group[-1].change_layer(self, 3)
+        self.name = 'enemy'
         self.hp = self.max_hp = stats['HP']
         self.bar = None
         self.dmg = stats['damage']
+        self.defence = 0
         self.target = target
         self.hits = hits
         self.frames = cut_sheet(load_image(name), frames)
@@ -27,15 +30,18 @@ class Enemy(pygame.sprite.Sprite):
         self.float_x, self.float_y = self.rect.x, self.rect.y
         self.invincibility = 0
 
+    def defend(self, value):
+        self.defence = value
+
     def take_damage(self, damage):
         if not self.invincibility:
-            self.hp -= damage
+            self.hp -= (damage - self.defence)
             self.invincibility = 0.75 * FPS
         if not self.bar:
-            self.bar = EnemyHealthBar(self.hp, self.max_hp, self.groups()[-1])
+            self.bar = EnemyHealthBar(self.name, self.hp, self.max_hp, self.groups()[-1])
         else:
             self.bar.kill()
-            self.bar = EnemyHealthBar(self.hp, self.max_hp, self.groups()[-1])
+            self.bar = EnemyHealthBar(self.name, self.hp, self.max_hp, self.groups()[-1])
         if self.hp <= 0:
             self.death()
 
@@ -50,8 +56,9 @@ class Enemy(pygame.sprite.Sprite):
 
 
 class Mortar(Enemy):
-    def __init__(self, pos, rails, target, hits, *group, orientation='bottom'):
-        super().__init__("mortar_" + orientation, 5, pos, target, hits, *group)
+    def __init__(self, pos, rails, target, stats, hits, *group, orientation='bottom'):
+        super().__init__("mortar_" + orientation, 5, pos, target, stats, hits, *group)
+        self.name = 'Mortar'
         self.rails = rails
         self.dmg *= 1.8
         self.cur_frame = 2
@@ -88,8 +95,28 @@ class Mortar(Enemy):
             self.attack()
             self.charge = 0
         self.invincibility = max(self.invincibility - 1, 0)
+        self.defence = 0
 
     def attack(self):
         vectors = [(-0.5, -0.5), (-0.25, -0.75), (0, -1), (0.25, -0.75), (0.5, -0.5)]
         Plasma((self.rect.centerx, self.rect.bottom - 11), 22.5 * (self.cur_frame - 2), vectors[self.cur_frame],
                self.dmg, self.hits, projectile_group, self.groups()[-1])
+
+
+class Defender(Enemy):
+    def __init__(self, pos, stats, hits, *group):
+        super().__init__("defender", 8, pos, None, stats, hits, *group)
+        self.name = 'Defender'
+        self.dmg *= 0.25
+        self.max_hp *= 0.5
+        self.hp = self.max_hp
+        self.sphere = Defence(self.rect.center, self.dmg, self.hits, projectile_group, self.groups()[-1])
+
+    def update(self):
+        self.cur_frame = (self.cur_frame + 3 / FPS)
+        self.image = self.frames[round(self.cur_frame) % len(self.frames)]
+        self.invincibility = max(self.invincibility - 1, 0)
+
+    def death(self):
+        self.sphere.detonate()
+        super().death()
