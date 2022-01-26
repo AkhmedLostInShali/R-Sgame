@@ -123,7 +123,7 @@ class Defence(Projectile):
         self.cur_frame = (self.cur_frame + 3 / FPS)
         self.image = self.frames[round(self.cur_frame) % len(self.frames)]
         for group in self.collides:
-            self.collisions(1, group)
+            self.collisions(1.0, group)
 
 
 class Orb(pygame.sprite.Sprite):
