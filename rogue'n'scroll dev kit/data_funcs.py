@@ -41,45 +41,55 @@ def load_level(filename):
     return list(map(lambda x: x.ljust(max_width, '.'), level_map[:-2])) + [level_map[-2:]]
 
 
+tile_images = {'base': load_image('tile_back'), 'top': load_image('top'), 'top_right': load_image('top_right'),
+               'low_right': load_image('low_right'), 'top_left': load_image('top_left'),
+               'low_left': load_image('low_left'), 'bottom': load_image('bottom'),
+               'bottom_right':  load_image('bottom_right'), 'bottom_left': load_image('bottom_left'),
+               'high_right': load_image('high_right'), 'high_left': load_image('high_left'),
+               'inner_top_right': load_image('inner_top_right'), 'inner_top_left': load_image('inner_top_left'),
+               'inner_bottom_right': load_image('inner_bottom_right'),
+               'inner_bottom_left': load_image('inner_bottom_left')}
+
+
 def build(matrix, x, y):
     im = pygame.surface.Surface((40, 40))
-    im.fill((100, 100, 120))
+    pygame.Surface.blit(im, tile_images['base'], (0, 0))
     up = 0 < y and matrix[y - 1][x] == '1'
     down = y + 1 < len(matrix) and matrix[y + 1][x] == '1'
     right = x + 1 < len(matrix[0]) and matrix[y][x + 1] == '1'
     left = x > 0 and matrix[y][x - 1] == '1'
     if not up:
-        pygame.Surface.blit(im, load_image('top'), (0, 0))
+        pygame.Surface.blit(im, tile_images['top'], (0, 0))
         if not right:
-            pygame.Surface.blit(im, load_image('top_right'), (0, 0))
+            pygame.Surface.blit(im, tile_images['top_right'], (0, 0))
             if down:
-                pygame.Surface.blit(im, load_image('low_right'), (0, 0))
+                pygame.Surface.blit(im, tile_images['low_right'], (0, 0))
         if not left:
-            pygame.Surface.blit(im, load_image('top_left'), (0, 0))
+            pygame.Surface.blit(im, tile_images['top_left'], (0, 0))
             if down:
-                pygame.Surface.blit(im, load_image('low_left'), (0, 0))
+                pygame.Surface.blit(im, tile_images['low_left'], (0, 0))
     if not down:
-        pygame.Surface.blit(im, load_image('bottom'), (0, 0))
+        pygame.Surface.blit(im, tile_images['bottom'], (0, 0))
         if not right:
-            pygame.Surface.blit(im, load_image('bottom_right'), (0, 0))
+            pygame.Surface.blit(im, tile_images['bottom_right'], (0, 0))
             if up:
-                pygame.Surface.blit(im, load_image('high_right'), (0, 0))
+                pygame.Surface.blit(im, tile_images['high_right'], (0, 0))
         if not left:
-            pygame.Surface.blit(im, load_image('bottom_left'), (0, 0))
+            pygame.Surface.blit(im, tile_images['bottom_left'], (0, 0))
             if up:
-                pygame.Surface.blit(im, load_image('high_left'), (0, 0))
+                pygame.Surface.blit(im, tile_images['high_left'], (0, 0))
     if not right and up and down:
-        pygame.Surface.blit(im, load_image('high_right'), (0, 0))
-        pygame.Surface.blit(im, load_image('low_right'), (0, 0))
+        pygame.Surface.blit(im, tile_images['high_right'], (0, 0))
+        pygame.Surface.blit(im, tile_images['low_right'], (0, 0))
     if not left and up and down:
-        pygame.Surface.blit(im, load_image('high_left'), (0, 0))
-        pygame.Surface.blit(im, load_image('low_left'), (0, 0))
+        pygame.Surface.blit(im, tile_images['high_left'], (0, 0))
+        pygame.Surface.blit(im, tile_images['low_left'], (0, 0))
     if left and down and not matrix[y + 1][x - 1] == '1':
-        pygame.Surface.blit(im, load_image('inner_top_right'), (0, 0))
+        pygame.Surface.blit(im, tile_images['inner_top_right'], (0, 0))
     if right and down and not matrix[y + 1][x + 1] == '1':
-        pygame.Surface.blit(im, load_image('inner_top_left'), (0, 0))
+        pygame.Surface.blit(im, tile_images['inner_top_left'], (0, 0))
     if left and up and not matrix[y - 1][x - 1] == '1':
-        pygame.Surface.blit(im, load_image('inner_bottom_right'), (0, 0))
+        pygame.Surface.blit(im, tile_images['inner_bottom_right'], (0, 0))
     if right and up and not matrix[y - 1][x + 1] == '1':
-        pygame.Surface.blit(im, load_image('inner_bottom_left'), (0, 0))
+        pygame.Surface.blit(im, tile_images['inner_bottom_left'], (0, 0))
     return im

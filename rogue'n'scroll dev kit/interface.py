@@ -53,8 +53,8 @@ class EnemyHealthBar(pygame.sprite.Sprite):
         super().__init__(*group)
         self.static = True
         group[-1].change_layer(self, 6)
-        length = cur_hp * min(max_hp * 2, 800) / max_hp
-        self.image = pygame.surface.Surface((min(max_hp * 2, 800), 15), pygame.SRCALPHA, 32)
+        length = cur_hp * 400 / max_hp
+        self.image = pygame.surface.Surface((400, 15), pygame.SRCALPHA, 32)
         self.rect = self.image.get_rect()
         self.rect.x, self.rect.y = FULL_SIZE[0] // 2 - self.rect.width // 2, 15
         pygame.draw.rect(self.image, (25, 25, 25), (0, 0, self.rect.width, 15))

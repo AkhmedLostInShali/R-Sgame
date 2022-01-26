@@ -44,6 +44,7 @@ class Projectile(pygame.sprite.Sprite):
     def detonate(self):
         self.kill()
 
+
 class Explosion(Projectile):
     def __init__(self, pos, dmg, collides, *group):
         super().__init__('explosion', pos, (0, 0), (0, 0), dmg, collides, *group)
@@ -83,7 +84,7 @@ class SunDrop(Projectile):
 class Plasma(Projectile):
     def __init__(self, pos, trajectory, vector, dmg, collides, *group):
         super().__init__('plasma', pos, (trajectory, 0), vector, dmg, collides, *group)
-        self.speed = 80 / FPS
+        self.speed = 120 / FPS
         self.timer = 0.35 * FPS
 
     def update(self, *args, **kwargs):
@@ -105,6 +106,24 @@ class Plasma(Projectile):
     def detonate(self):
         Explosion(self.rect.center, self.dmg, self.collides, *self.groups())
         self.kill()
+
+
+class Defence(Projectile):
+    def __init__(self, pos, dmg, collides, *group):
+        super().__init__('defence', pos, (0, 0), (0, 0), dmg, collides, *group)
+        self.rect.center = pos
+
+    def collisions(self, ratio, group):
+        pl_collisions = pygame.sprite.spritecollide(self, group, False,
+                                                    collided=pygame.sprite.collide_circle_ratio(ratio))
+        for col in pl_collisions:
+            col.defend(self.dmg)
+
+    def update(self):
+        self.cur_frame = (self.cur_frame + 3 / FPS)
+        self.image = self.frames[round(self.cur_frame) % len(self.frames)]
+        for group in self.collides:
+            self.collisions(1, group)
 
 
 class Orb(pygame.sprite.Sprite):
