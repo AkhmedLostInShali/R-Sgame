@@ -269,11 +269,13 @@ def terminate():
 def bridge(number):
     buttons_group = pygame.sprite.Group()
     all_buttons = os.listdir('data/tips')
-    if number == 5:
-        buttons = sample(list(filter(lambda x: 'sigil' in x, all_buttons)), k=3)
+    if number == 1:
+        n = 2
+        buttons = sample(list(filter(lambda x: 'sigil' in x, all_buttons)), k=2)
     else:
+        n = 3
         buttons = sample(list(filter(lambda x: 'sigil' not in x, all_buttons)), k=3)
-    for i in range(3):
+    for i in range(n):
         Button(i, buttons[i][:-4], buttons_group)
     running = True
     while running:
