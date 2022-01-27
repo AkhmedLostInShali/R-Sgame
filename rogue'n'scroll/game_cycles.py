@@ -268,6 +268,7 @@ def terminate():
 
 def bridge(number):
     buttons_group = pygame.sprite.Group()
+    # just for commit
     all_buttons = os.listdir('data/tips')
     if number == 1:
         n = 2

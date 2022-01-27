@@ -25,171 +25,13 @@
     <select>
       <path>
         <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="BRANCH:origin/master" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:master" type="e8cecc67:BranchNodeDescriptor" />
       </path>
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="07577d99-2051-4d6d-bf6c-cf91923818a0" name="Changes" comment="version 0.1.0 &#10;ready to show!">
-      <change afterPath="$PROJECT_DIR$/rogue'n'scroll/icon.ico" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/R&amp;SProject.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/R&amp;SProject.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/build/game_cycles/Analysis-00.toc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/build/game_cycles/COLLECT-00.toc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/build/game_cycles/EXE-00.toc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/build/game_cycles/PKG-00.toc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/build/game_cycles/PYZ-00.pyz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/build/game_cycles/PYZ-00.toc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/build/game_cycles/Tree-00.toc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/build/game_cycles/Tree-01.toc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/build/game_cycles/Tree-02.toc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/build/game_cycles/base_library.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/build/game_cycles/game_cycles.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/build/game_cycles/game_cycles.exe.manifest" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/build/game_cycles/game_cycles.pkg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/build/game_cycles/warn-game_cycles.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/build/game_cycles/xref-game_cycles.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/SDL2.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/SDL2_image.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/SDL2_mixer.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/SDL2_ttf.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/VCRUNTIME140.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/_asyncio.pyd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/_bz2.pyd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/_ctypes.pyd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/_decimal.pyd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/_hashlib.pyd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/_lzma.pyd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/_multiprocessing.pyd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/_overlapped.pyd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/_queue.pyd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/_socket.pyd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/_ssl.pyd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/_uuid.pyd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/altgraph-0.17.2.dist-info/INSTALLER" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/altgraph-0.17.2.dist-info/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/altgraph-0.17.2.dist-info/METADATA" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/altgraph-0.17.2.dist-info/RECORD" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/altgraph-0.17.2.dist-info/WHEEL" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/altgraph-0.17.2.dist-info/top_level.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/altgraph-0.17.2.dist-info/zip-safe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/base_library.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/buildings.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/data/bottom.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/data/bottom_left.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/data/bottom_right.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/data/cosmo_weapon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/data/defence_projectile.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/data/defender.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/data/drop_projectile.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/data/explosion_projectile.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/data/high_left.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/data/high_right.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/data/inner_bottom_left.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/data/inner_bottom_right.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/data/inner_top_left.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/data/inner_top_right.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/data/low_left.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/data/low_right.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/data/mortar.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/data/mortar_bottom.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/data/mortar_charge.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/data/plasma_projectile.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/data/platforms.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/data/portal_charged.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/data/portal_uncharged.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/data/rail.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/data/soundtrack_1.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/data/soundtrack_2.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/data/stat_bar.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/data/stat_bar_back.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/data/tile_back.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/data/tips/sigil_MP_boost.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/data/tips/sigil_XP_boost.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/data/tips/temp_DMG_boost.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/data/tips/temp_HP_boost.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/data/tips/temp_MP_boost.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/data/top.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/data/top_left.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/data/top_right.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/data/torso.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/data/torso_gold.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/data/wall_background.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/data_funcs.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/enemies.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/game_cycles.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/initialisation.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/interface.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/levels/level1.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/levels/level2.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/libFLAC-8.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/libcrypto-1_1.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/libffi-7.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/libfreetype-6.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/libjpeg-9.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/libmodplug-1.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/libmpg123-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/libogg-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/libopus-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/libopusfile-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/libpng16-16.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/libssl-1_1.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/libtiff-5.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/libvorbis-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/libvorbisfile-3.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/libwebp-7.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/portmidi.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/projectiles_n_movings.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/pyexpat.pyd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/pygame/_freetype.cp310-win_amd64.pyd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/pygame/base.cp310-win_amd64.pyd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/pygame/bufferproxy.cp310-win_amd64.pyd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/pygame/color.cp310-win_amd64.pyd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/pygame/constants.cp310-win_amd64.pyd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/pygame/display.cp310-win_amd64.pyd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/pygame/draw.cp310-win_amd64.pyd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/pygame/event.cp310-win_amd64.pyd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/pygame/font.cp310-win_amd64.pyd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/pygame/freesansbold.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/pygame/image.cp310-win_amd64.pyd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/pygame/imageext.cp310-win_amd64.pyd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/pygame/joystick.cp310-win_amd64.pyd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/pygame/key.cp310-win_amd64.pyd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/pygame/mask.cp310-win_amd64.pyd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/pygame/math.cp310-win_amd64.pyd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/pygame/mixer.cp310-win_amd64.pyd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/pygame/mixer_music.cp310-win_amd64.pyd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/pygame/mouse.cp310-win_amd64.pyd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/pygame/pixelarray.cp310-win_amd64.pyd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/pygame/pixelcopy.cp310-win_amd64.pyd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/pygame/pygame_icon.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/pygame/rect.cp310-win_amd64.pyd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/pygame/rwobject.cp310-win_amd64.pyd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/pygame/scrap.cp310-win_amd64.pyd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/pygame/surface.cp310-win_amd64.pyd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/pygame/surflock.cp310-win_amd64.pyd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/pygame/time.cp310-win_amd64.pyd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/pygame/transform.cp310-win_amd64.pyd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/pyinstaller-4.8.dist-info/COPYING.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/pyinstaller-4.8.dist-info/INSTALLER" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/pyinstaller-4.8.dist-info/METADATA" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/pyinstaller-4.8.dist-info/RECORD" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/pyinstaller-4.8.dist-info/REQUESTED" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/pyinstaller-4.8.dist-info/WHEEL" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/pyinstaller-4.8.dist-info/entry_points.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/pyinstaller-4.8.dist-info/top_level.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/python310.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/select.pyd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/settings_n_variables.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/unicodedata.pyd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/xp.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/dist/game_cycles/zlib1.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/game_cycles.py" beforeDir="false" afterPath="$PROJECT_DIR$/rogue'n'scroll/game_cycles.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rogue'n'scroll/game_cycles.spec" beforeDir="false" />
-    </list>
+    <list default="true" id="07577d99-2051-4d6d-bf6c-cf91923818a0" name="Changes" comment="version 0.1.0 &#10;ready to show!" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -326,7 +168,28 @@
       <option name="project" value="LOCAL" />
       <updated>1643233089911</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="fixed 0.1.0 version&#10;i hope so 2">
+      <created>1643290089989</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1643290089989</updated>
+    </task>
+    <task id="LOCAL-00004" summary="fixed 0.1.0 version&#10;i hope so 2">
+      <created>1643290094509</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1643290094509</updated>
+    </task>
+    <task id="LOCAL-00005" summary="fixed 0.1.0 version&#10;i hope so 2">
+      <created>1643290142814</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1643290142814</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -340,7 +203,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/master" />
+                        <option value="master" />
                       </list>
                     </value>
                   </entry>
@@ -355,7 +218,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="version 0.1.0 &#10;ready to show!" />
-    <option name="LAST_COMMIT_MESSAGE" value="version 0.1.0 &#10;ready to show!" />
+    <MESSAGE value="fixed 0.1.0 version&#10;i hope so 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed 0.1.0 version&#10;i hope so 2" />
   </component>
   <component name="WindowStateProjectService">
     <state x="414" y="174" width="1092" height="715" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1643289689953">
@@ -378,6 +242,14 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1899" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1643290000166" />
+    <state x="607" y="281" key="MultipleFileMergeDialog" timestamp="1643290466322">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="607" y="281" key="MultipleFileMergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1643290466322" />
+    <state x="561" y="252" key="Vcs.Push.Dialog.v2" timestamp="1643290435317">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="561" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1643290435317" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
