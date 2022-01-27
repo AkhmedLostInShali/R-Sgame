@@ -270,7 +270,7 @@ def bridge(number):
     buttons_group = pygame.sprite.Group()
     all_buttons = os.listdir('data/tips')
     if number == 5:
-        buttons = sample(list(filter(lambda x: 'sigil' in x, all_buttons)), k=3)
+        buttons = sample(list(filter(lambda x: 'sigil' in x, all_buttons)), k=2)
     else:
         buttons = sample(list(filter(lambda x: 'sigil' not in x, all_buttons)), k=3)
     for i in range(3):
